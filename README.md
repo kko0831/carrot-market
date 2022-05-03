@@ -1003,3 +1003,227 @@ padding을 전체적으로 10만큼 줌
 이것이 좀더 둥글어야겠음
 
 이것을 rounded-full로 변경해줌
+
+## 4.2 Test Drive part Two
+
+오늘의 마지막 카드로 가봄
+
+이번에 할 것은 재미있음
+
+왜냐하면 몇몇 element는 아마 상대적으로(relative) 배치되어있음
+
+어쩌면 절대적(absolute)일 수도 있고 한번 봄
+
+그러면 top부분과 bottom부분에서부터 시작해봄
+
+그러면 여기에 div와 span을 만들어 주고, top 부분은 똑같이 Profile이라고 씀
+
+bottom부분은 아주 많은 것들을 가짐
+
+div가 있을 거고 그 안에 다음 두 가지를 포함한 또 다른 div가 들어감
+
+그 두 가지는 바로 orders를 포함한 span과 숫자를 포함한 span임
+
+숫자는 340으로 함
+
+그 다음에는 프로필 사진을 만들건데 진짜 사진 말고 그냥 원으로 만듦
+
+그리고 여기도 위에랑 똑같이 해줌
+
+Spent랑 우리가 쓴 돈을 써주면 그럼 끝임
+
+이것은 접어두고 이것도 접어둠
+
+두개의 span이 들어간 div를 한개 더 만들고 그 안에는 Tony Molloy랑 이 사람은 미국에 사니까 여기에 미국이라고 써주면 다 됐음
+
+마크업은 여기까지고 이제 우리 카드를 만들어봄
+
+먼저 파란 배경에 흰색 글씨 여기부터 해봄
+
+이렇게 하면 됨
+
+classname은 bg blue로 blue 500이 마음에 드니까 이것으로 계속 함
+
+지금 보면 우리 카드가 padding이 있어서 이상해 보이니까 이 부분은 지워줌
+
+대신 padding은 이쪽에 붙여줌
+
+여기에는 overflow hidden을 넣음
+
+그리고 우리 Profile 글자를 흰색으로 해야함
+
+text white라고 className을 주고 그리고 크기는 아마 text 2xl정도로 하면 좋을 것 같음
+
+이것이 우리가 원하던 것임
+
+Profile은 완성함
+
+여기 보면 아래쪽에 공간이 조금 있음
+
+그러니까 padding을 조금 더 넣어줘도 좋을 것 같음
+
+여기서 해봄
+
+padding bottom, pb라고 하고 적당한 숫자를 골라볼건데, 14면 될 것 같음
+
+그럼 얘는 닫아두고 아래 부분을 봄
+
+여기에도 className을 만들어주고 rounded라는 것을 사용함
+
+자동완성이 나오지 않으면 컨트롤 스페이스를 누르면 됨
+
+그러면 rounded xl을 줌
+
+당연히 아직은 rounded가 보이지 않는데 왜냐하면 이 부분을 Profile 위에 올려줘야 하기 때문임
+
+그러면 이제 position relative를 씀
+
+이 위치에 relative를 쓰면 됨
+
+보다시피 간단하지
+
+그리고 마이너스를 쓴 다음에 음수 값을 줌
+
+마이너스 top 숫자는 14로 함
+
+그런데 예뻐보이지는 않음
+
+배경색을 bg white로 넣음
+
+14는 너무 많은 것 같으니까 마이너스 5정도면 괜찮음
+
+rounded는 2xl로 바꿈
+
+이거랑 비슷하지
+
+아마도 rounded가 2xl보다 큰게 나을 것 같음
+
+이제 padding을 줄건데 6정도로 함
+
+거의 다 왔음
+
+그럼 이 Orders와 Profile 사진이랑 사용한 Money가 나온 div를 가지고 className에 flex를 써줌
+
+그리고 justify between도 써줌
+
+그러면 이제 아바타도 만들어봄
+
+일단 height하고 width는 24px로 해봄
+
+너무 큰 가
+
+아직 모르겠음
+
+그리고 배경색 bg는 red로 함
+
+숫자는 400으로 함
+
+이번에는 rounded full을 사용해 볼건데 이것은 사각형을 원으로 만들어주는 역할의 className임
+
+이제 container로 가서 items end 이렇게 해줌
+
+그런 다음에 이 container를 옮겨줄건데 relative로 만듦
+
+여기에는 마이너스를 쓸건데 이것이 아마 우리가 거의 처음으로 본 음의 값임
+
+-top 이렇게 씀
+
+이런식으로 음수 값을 쓸 수 있음
+
+-10으로 붙여봄
+
+어떻게 됐는지 확인해봄
+
+다시 여기로 와서 마이너스 16정도로 해봄
+
+나쁘지 않음
+
+이제 Orders랑 Spent도 고쳐줌
+
+Orders랑 Spent를 둘 다 열어주고 두 component들 모두 className으로 flex랑 flex column을 가짐
+
+items center까지 씀
+
+여기를 한번 확인해봄
+
+Orders는 작고 회색임
+
+Spent도 마찬가지지
+
+Orders와 Spent 둘 다 작고 회색으로 만듦
+
+text small이라고 하면 되겠지
+
+그리고 text gray도 함
+
+잘 됐음
+
+그 다음에는 숫자 차례임
+
+숫자들의 className은 조금 굵어야 하니까 font-medium으로 함
+
+어때 보여
+
+거의 다왔음
+
+이제 여기 Tony Molloy부분을 고쳐줘야 하는데, 왜냐하면 우리가 이 부분을 relative하게 움직일거니까 Tony Malloy부분도 relative 해야함
+
+그러니까 이쪽에도 똑같이 className을 붙여넣기 해줌
+
+그리고 flex container로 flex direction은 col로 하고 그리고 items center까지 함
+
+거의 다 왔음
+
+우리 Tony Malloy에게 margin top을 더 줌
+
+10px는 너무 많음
+
+5px는 나쁘지 않음
+
+두꺼운 글자랑 작은 글자는 간단히 끝냈음
+
+className으로 text를 조금 더 크게 만듦
+
+font medium으로 하고 그리고 미국 글자는 더 작아져야함
+
+text gray 400은 너무 회색이니까 500으로 함
+
+여기에서 문제는 absolute한 값을 적어줬다는 것임
+
+그래서 이렇게 개체들을 움직이는 대신에 우리가 할 수 있는 것은 마이너스 margin top을 16만큼 줘봄
+
+여기 넣었던 margin top은 지우고 -mt-10을 넣어줌
+
+나쁘지 않음
+
+마이너스 margin bottom은 5로 함
+
+이제 다 됐음
+
+이제 우리는 profile card를 만들었음
+
+당연히 멋진 이미지와 아이콘 같은 것은 아직 없지만 충분히 멋짐
+
+마음에 듦
+
+괜찮은 것 같음
+
+좀 더 통통하게 만들고 싶다면 여기로 와서 x 숫자를 조정해줄 수 있음
+
+우리 예시와 조금 더 비슷해졌음
+
+괜찮은 것 같음
+
+이번 영상에서 무엇을 배웠지
+
+tailwind는 아주 강력해서 relative(상대적인) 움직임부터 음의 값까지 사용할 수 있게 해줌
+
+예를 들면 margin top을 마이너스 2.5rem으로 할 수도 있음
+
+이것은 꽤 멋짐
+
+flexbox를 조금 더 연습해 봤고 어떻게 원을 그리는지도 배웠음
+
+이렇게 size를 이용하면 아주 간단했지
+
+정말 멋진 것 같음
