@@ -1227,3 +1227,293 @@ flexbox를 조금 더 연습해 봤고 어떻게 원을 그리는지도 배웠�
 이렇게 size를 이용하면 아주 간단했지
 
 정말 멋진 것 같음
+
+## 4.3 Test Drive part Three
+
+이번 영상에서는 바로 이 component를 만들면서 Tailwind CSS의 테스트 드라이브를 마무리 해봄
+
+원래 여기 두 가지를 만들려고 했었지만, 우리가 계속 하던 padding, margin 그리고 font size 이런거라서 굳이 둘 다 할 필요는 없을 것 같음
+
+그 대신에 모두 합쳐서 이 화면으로 만들려고 함
+
+그리고 rings와 input에 대해 얘기해 볼 기회도 가짐
+
+이것을 배우면 참 멋있고 좋을 것 같음
+
+지금쯤이면 tailwind CSS에 조금 익숙해지고 있으면 좋겠는데, 만약 복잡하거나 className을 기억하기 어렵더라도 걱정은 하지마.
+
+이번 섹션 전체에서 계속 해봄
+
+react component를 만들면서 Tailwind CSS로 스타일을 만들게 됨
+
+지금 하고 있는 것과 같은 작업이겠지만 이제 캐럿마켓 UI를 만듦
+
+그러니까 지금 복잡하게 느껴지거나 기억이 잘 안난다고해도 걱정마
+
+TailwindCSS를 사용할수록 점점 쉬워지고 나아짐
+
+그리고 보다보면 우리가 하는 것은 padding, margin, font, flex, grid 다 이런 것들임
+
+그럼 시작해봄
+
+우리의 markup을 만들어봄
+
+먼저 span을 만들고 그 안에 화살표를 넣음
+
+이모지에서 찾아봄(Mac:커맨드+컨트롤+스페이스바, Windows: 윈도우+마침표)
+
+여기에 있는 화살표로 함
+
+그리고 div를 만들어서 여기에 별모양이 있으니까 이모지에서 또 찾아봄
+
+4.9를 써주고 그리고 하트를 위한 span도 만들어줌
+
+이것이 우리의 top바가 됨
+
+나는 의자 사진이 없으니까 아쉽지만 대신에 사각형을 넣어줌
+
+이제 div를 열고 span안에다 Swoon Lounge라고 써줌
+
+혹시나 모를까봐 Chair라고도 써줌
+
+또 div를 하나 만들어서 여기에서는 input을 받아봄
+
+input의 type은 radio로 함
+
+3개를 만듦
+
+그 다음에는 버튼이 필요함
+
+여기까지 모두를 새로운 div 안에 넣음
+
+그리고 마이너스와 플러스 Button들이 들어있는 div를 만듦
+
+수량이 들어갈 span도 만듦
+
+이 모든 div다음에 또 다른 div가 필요함
+
+다음에는 div나 button 중 아무거나 만들어서 Add to cart까지 써줌
+
+이제 다 있음
+
+우리의 markup은 완성했음
+
+버튼도 있음
+
+필요한 것은 다 가지고 있음
+
+우리 페이지가 여기에서 끝남
+
+끝까지 표시되지가 않음
+
+이것은 minimum height라는 className으로 해결할 수 있음
+
+container로 와서 여기에는 height랑 width 둘다 가능함
+
+다음 옵션은 full이나 screen인데 우리의 경우에는 screen이 필요함
+
+이제 맨 아래까지 표시되지
+
+그럼 header를 만들어봄
+
+아주 쉬움
+
+flex나 아마 shadow정도면 됨
+
+같이 해봄
+
+그리고 여기 하트는 그림자가 필요함
+
+작은 shadow(md)로 할까
+
+padding은 2정도면 괜찮을 것 같고 rounded는 md로 함
+
+여기 잘 보면 있음
+
+그리고 이 두 개에게 space를 x좌표로 3만큼 줌
+
+보다시피 둘 사이에 간격(space)이 생겼음
+
+그리고 Tailwind는 아주 멋진 helper function(도와주는 기능)이 있음
+
+우리가 margin right, margin left 이런 모든 것을 직접 계산하지 않아도, 아주 간단하게도 space-x-3 이런식으로 적으면 알아서 계산을 해줌
+
+엄청 심플하지
+
+이 container에게 margin bottom을 줌
+
+mb를 5정도로 하고 이제 이미지를 만듦
+
+아쉽게도 우리는 이미지를 갖고 있지 않음
+
+next.js에서 이미지를 사용하는 것은 일반적으로 img태그를 사용하는 것과 다르기 때문에 나중에 다룰거고 지금은 bg zinc로 함
+
+나는 zinc가 좋음
+
+그리고 height는 86으로 함
+
+86은 없나봄
+
+80은 있는 것 같음
+
+너무 큼
+
+나쁘지 않음
+
+이제 다 됐음
+
+이것은 div니까 width를 설정하거나 할 필요가 없음
+
+다음으로는 space와 font를 설정할 차례임
+
+이미지는 5만큼의 margin bottom을 가짐
+
+이름인 Swoon Lounge는 className에 font medium을 줌
+
+margin bottom은 1.5정도면 되겠음
+
+Chair는 ClassName으로 text-xs(extra small), 색상은 text-gray-500임
+
+그 다음에는 input이 들어간 space가 필요함
+
+이 input은 수량과 함께 top, bottom space가 필요함
+
+margin top을 2만큼 줌
+
+margin bottom을 5로 함
+
+여기로 와서 확인해봄
+
+나쁘지 않음
+
+이 div가 className flex, flex column이어야 하는 것을 잊어버렸음
+
+우리의 Swoon Lounge가 있음
+
+Swoon lounge가 좀 더 큰 text style을 가지면 좋겠음
+
+text....lg 아니면 xl로 함
+
+나쁘지 않음
+
+margin bottom은 필요 없음
+
+그러면 수량 버튼을 먼저 만들고 그 다음에 radio 버튼을 만듦
+
+수량은 아주 쉬움
+
+이제 이 두개를 flex로 바꾸고 싶음
+
+이제 이 녀석한테 집중해볼까
+
+className을 줌
+
+padding을 2.5정도로 하고 가끔은 .5값이 있는데 없을때도 있음
+
+1.5는 있는데 10.5는 없음
+
+10.5는 안 나옴
+
+8.5도 없고 여기에는 1.5, 2.5정도가 있음
+
+이렇게 함
+
+둘 다 background를 blue 200으로 함
+
+어때보이는지 확인해봄
+
+하지만 걱정하지마
+
+이번에는 aspect라는 것을 줌
+
+이렇게 하면 width를 10처럼 정해줘야함
+
+aspect-square는 aspect-ratio라는 새로운 css property로 우리를 도와줌
+
+이것을 지우고 한번 비교해볼까
+
+사각형부분을 잘 봄
+
+저장하고 이제 보면 정사각형이 아니게 됐지
+
+하지만 aspect square를 사용하면 정사각형으로 변함
+
+width도 꼭 같이 줘야함
+
+이 안에 font를 medium으로 설정함
+
+그리고 text는 xl로 색상은 이렇게 gray로 함
+
+우리가 원하는만큼 멋지지는 않지만 꽤 괜찮음
+
+그냥 font medium도 지워줘도 될 것 같음
+
+꽤 괜찮음
+
+다시 한 번 spacing을 사용함
+
+여기로 와서, 둘 사이에 space를 주고싶다고 하자!
+
+이렇게 space, x축방향으로.... 5만큼!
+
+이제 모서리를 둥글게 해주면 다 될 것 같음
+
+이 쪽의 padding은 필요없을 것 같으니 지움
+
+그리고 버튼 크기만 줄여주면 다 될 것 같음
+
+w8로 함
+
+이제 가격하고 Add to cart 부분을 만들어봄
+
+rings부분은 지금하기에는 너무 복잡할 수 있어서 나중에 함
+
+450이랑 Add to cart를 할 차례인데 그냥 flex container니까 어렵지는 않음
+
+flex, padding, background 이런 것들을 이용해서 두 개를 떼어놓으면 됨
+
+이것은 className font medium으로 함
+
+text는 크게 2xl로 함
+
+잘 되나 봄
+
+거의 다 됐음
+
+여기는 justify-between이어야함
+
+마지막으로는 padding을 3정도만 줌
+
+나쁘지 않음
+
+top과 bottom은(px) 2로 하고 좌우(py)는 5로 함
+
+아직 충분하지가 않음
+
+그러면 text를 좀 작게 만듦
+
+이제 마지막 component까지 모두 끝났음
+
+다시 한번 보면 우리가 하는 것은 flex를 이용함
+
+그리고 space, margin, padding도 있었고 font medium, text 2xl 같은 것들까지 하면 이제 다 한 것임
+
+이 코드들이 좀 무섭게 보일수도 있지만 우리가 클론할 캐럿마켓 화면을 켜서 들여다보면 디자인의 대부분은 spacing, margin 이런 것들임
+
+그러니까 별로 걱정할 것은 없음
+
+다음 영상에서는 TailwindCSS의 아주 멋진 기능인 rings에 대해 배워봄
+
+보다시피 Tailwind CSS는 이렇게 class들을 가지는데 합쳐서 사용하면 아주 유용해짐
+
+또 우리에게 지름길을 주는 helper class도 존재함
+
+예를 들면 여기에 사용한 space 같은 것임
+
+다시 한번 말하자면 이 space라는 애는 자식 component의 좌우 margin을 알아서 계산해줌
+
+여기 아래에 있는 component들에게 margin right와 left를 줌
+
+덕분에 우리는 space-x-5 이렇게만 쓰고 계산을 하지 않아도 됨
+
+이런 것들이 될건데 radio 버튼에 스타일을 넣으면서 알아봄
