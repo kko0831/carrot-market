@@ -1517,3 +1517,171 @@ top과 bottom은(px) 2로 하고 좌우(py)는 5로 함
 덕분에 우리는 space-x-5 이렇게만 쓰고 계산을 하지 않아도 됨
 
 이런 것들이 될건데 radio 버튼에 스타일을 넣으면서 알아봄
+
+## 4.4 Modifiers
+
+이번 영상에서는 아주 멋진 기능인 modifier에 대해서 배울건데, 그 전에 여기 button 3개 먼저 만듦
+
+이것이 더 쉬울 것 같아서 radio는 지우고 그냥 button으로 만들었음
+
+width와 height는 5로 하고 rounded는 full로 함
+
+그리고 첫번째 button의 background는 bg-yellow-500임
+
+이제 저장하면 이것이 우리의 button이 됨
+
+두번째 button의 색깔은 indigo로 해봄
+
+세번째는 teal로 함
+
+위에 space-x-2를 썼기 때문에 각 button들 사이에 자동으로 space가 생겼음
+
+margin right이나 margin left에 생각할 필요가 없음
+
+이제 Tailwind CSS와의 작업을 환상적이게 만들어주는 기능을 소개함
+
+여태까지 우리가 한 것으로 봤을때 Tailwind는 꽤 멋짐
+
+className만 썼는데 만들어졌음
+
+우리가 직접 className을 만들고 기억하고 할 필요가 없음
+
+Tailwind className과 자동완성을 사용하면 굉장히 생산적으로 만들 수 있었음
+
+하지만 우리가 이제 배울 modifier라는 Tailwind기능은 우리를 한 수 위로 데려다 줌
+
+이제 해볼 것은 여기에 있는 Checkout button을 바꾸고 싶음
+
+이 button을 바꿈
+
+먼저 이 부분을 열어주고 div를 button으로 바꿔줌
+
+이제 내 마우스 커서가 button 위에 올라왔을 때 button의 색상이 변하면 좋겠음
+
+원래 CSS할 때는 이런 식으로 만들었음
+
+이것이 일반적인 CSS에서 사용하는 방법임
+
+하지만 Tailwind CSS에서는 modifier라는 것을 이용할 수 있음
+
+modifier는 바로 이런 것임
+
+예를 들어 hover를 하고 싶으면 이 condition(조건)이 발생했을 때 실행될 property를 적어줌
+
+예를 들어 지금 이 checkout button 위에 마우스를 hover할때, background color는 teal 500으로 함
+
+이 부분은 위에서 사용한 bg blue와 같은 property임
+
+차이점은 앞에 hover가 붙은 classname임
+
+보다시피 이것은 classname임
+
+Tailwind CSS는 아주 많은 class를 가진 아주 큰 CSS 파일이라고 한 적이 있음
+
+예를 들면 이것은 classname이 hover: bg-teal-500임
+
+그러니까 이 코드를 save한 다음에 넘어와서 확인해보면 잘 작동되는 것을 볼 수 있음
+
+보다시피 hover할때 색상이 잘 변함
+
+아주 간단하게 만들어냈음
+
+이런 것이 modifier고 아주 강력함
+
+우리는 hover와 같은 state를 타겟으로 하고 싶을때 modifier를 사용할 수 있음
+
+또 예를 들면 viewports를 타겟으로 할 때도 modifier를 사용할 수 있음
+
+예를 들면 mobile only, 큰 screen only임
+
+화면 방향이나 인쇄시 인쇄 스타일에 따른 스타일을 조절할 수 있음
+
+hover 다음에 일반 css 속성을 써줌
+
+예를 들어봄
+
+마우스를 hover하면 text를 검정색으로 바꾸고 싶음
+
+이제 두가지 일이 일어남
+
+첫번째 클래스가 선택되었으니 마우스 hover시에 background color가 teal이 될거고, 두번째 클래스도 똑같이 마우스 hover시에 text color가 black이 됨
+
+보다시피 아주 완벽하게 작동됨
+
+이것이 바로 modifier임
+
+다시 한번 button을 보면 active라는 것도 있음
+
+active는 내가 버튼을 클릭했을때 발생함
+
+예를 들어 active modifier를 한번 사용해봄
+
+여기로 와서 이렇게 active라고 써줌
+
+내가 버튼을 누를때 background를 yellow 500으로 하고 싶음
+
+이것이 active가 됨
+
+이쪽으로 와서 클릭을 하면 active가 실행됨
+
+한 가지가 더 있는데 바로 focus임
+
+버튼에 focus가 가있을 때 text 색상을 red 500으로 함
+
+오직 focus가 됐을 때만임
+
+Focus가 일어난다는 것은 이렇게 선택창 초점이 나타날 때를 말함(tab으로 이동 중)
+
+지금 우리의 button들에 focus해보고 있음
+
+이제 확인 해보면 focus가 되니까 text가 red로 변했음
+
+text말고 bg(background)를 바꿈
+
+그러면 됐음
+
+바로 이 멋진 것이 modifier임
+
+이것이 바로 Tailwind CSS를 더욱 강력하게 만들어줌
+
+아직 훨씬 더 많은 modifier들이 남아있음
+
+정말 유용해서 소개해주고 싶은 것이 아주 많음
+
+특히 group modifier나 sibling modifier 같은 것이 있음
+
+모두 이 예시에서 다루게 됨
+
+이번 강의에서 다 한다는 것은 아니고 지금의 이 UI 안에서 다룸
+
+여기에 모두 적용시킴
+
+우리 button 스타일을 이렇게 표현하고, button의 각 stage를 다르게 표현할 수도 있었음
+
+className으로 우리의 button이 크고 작은 화면 크기에 따라서 어떻게 생겨야 하는지도 정할 수 있음
+
+이 모든 것을 className으로 함
+
+이 modifier라는 기능이 정말 판을 뒤집어 놓은 기능이라 소개하고 싶었음
+
+꼭 다른 modifier에 대해서도 알려줌
+
+예를 들면 다크모드가 있음
+
+그것도 같은 방식으로 작동함
+
+여기에 dark라고 쓰면 다크모드를 켰을때 해당하는 property가 적용됨
+
+보다시피 syntax자체는 정말 이해하기 쉬움
+
+여기는 condition부분이고 이쪽은 앞의 condition이 true일때 실행될 property임
+
+버튼에 마우스를 hover하면 background가 teal색이 되겠고, 버튼에 focus가 가면 background는 red가 됨
+
+그리고 마우스를 위에다 올리면 classname도 볼 수 있었음
+
+이것이 우리가 사용중인 classname이고 focus가 되면 이러한 일들이 일어남
+
+우리가 생각할 수 있는 모든 조합들이 존재하고 있음
+
+modifier에 대해서 더욱 많이 알아봄
