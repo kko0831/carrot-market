@@ -1685,3 +1685,225 @@ className으로 우리의 button이 크고 작은 화면 크기에 따라서 어
 우리가 생각할 수 있는 모든 조합들이 존재하고 있음
 
 modifier에 대해서 더욱 많이 알아봄
+
+## 4.5 Transitions
+
+지난 영상에서는 modifier가 얼마나 멋진지, 덕분에 Tailwind CSS가 얼마나 강력한지 봤음
+
+그래서 이번 영상부터는 더 많은 modifier에 대해 배워봄
+
+전에도 말했듯이 지금 하는 것들의 목적은 이것을 다 외우는게 아님
+
+그냥 TailwindCSS로 무엇을 할 수 있는지 한바퀴 투어를 시켜주고 싶음
+
+그래서 나중에 프로젝트나 회사에서 TailwindCSS를 사용해 디자인을 하고 싶을때 좀 더 편하게 느낄 수 있음
+
+할 수 있는 것에 제한이 없다는 것도 알게 됨
+
+이 섹션은 just in time compiler를 다루면서 마무리하게 될건데, 이것을 보면 TailwindCSS가 무한하다는 것을 알 수 있음
+
+이제는 누구나 좋아할 것 같고 정말 멋진 것 같은 ring utility에 대해 배워봄
+
+ring utility는 그 자체로 modifier는 아니지만 modifier와 함께 사용해서 멋진 효과를 낼 수 있음
+
+우리의 button으로 가봄
+
+button 3개를 만들었지
+
+색상은 각각 yellow, indigo, teal로 했었음
+
+이제 focus에 대해 아니까 user가 이 버튼을 누를 수 있게 하고, 버튼이 눌려졌다는 것을 볼 수 있게 함
+
+react나 state 같은 것들을 쓸 필요는 없음
+
+대신에 focus modifier와 ring utility라는 것을 사용함
+
+먼저 여기 yellow button부터 봄
+
+그리고 이 button이 ring을 가질거라고 말해줘야함
+
+말 그대로 2만큼 ring 이렇게 써줌
+
+확인해보면 벌써 border처럼 생긴 ring이 만들어졌음
+
+이 ring은 굉장히 커스터마이즈하기 쉬움
+
+이번에는 이 ring이 2만큼의 offset을 가진다고 함
+
+이제 확인해보면 border가 조금 멀어졌음
+
+여기 보이지
+
+멋지게 살짝 공간이 생겼음
+
+이제 이 코드 위에 마우스를 올려놓고 보면 이것이 하는 일이 box shadow를 만드는 거라는 것을 알 수 있음
+
+우리가 여기에 보는 것은 기본적으로 box shadow임
+
+border처럼 보이지만 이 사이 공간 등 많은 것을 마음대로 바꿀 수 있기 때문에 분명 많은 디자이너들이 좋아함
+
+offset 8로 하면 아주 멀고 1로 하면 이정도임
+
+다시 한번 여러분이 어떤 생각을 할지 앎
+
+이런 생각을 함
+
+만약 내 offset이 7이 되기를 원하면 어떡하지
+
+7은 없음
+
+만약 6이나 24이길 원한다면 어떡해
+
+그래서 우리가 just in time compiler에 대해 배움
+
+이것은 Tailwind 버전3에서 나온거라 정말 기대됨
+
+일단은 offset 2로 해둠
+
+이제는 ring의 색상을 바꿔봄
+
+ring이라고 쓰고 이번에도 yellow로 함
+
+ring-yellow-500이라고 써줌
+
+이제 border 같은 것이 생겼음
+
+이것은 button을 눌렀을때, 즉 button에 focus가 생겼을때만 발생시켜야함
+
+그것이 우리가 원하던 거였음
+
+이렇게 classname을 써주는 대신에 ring을 만들어주는 이 ring-2 classname을 button이 focus됐을때만 발생하도록 함
+
+중요한 것은 내가 이 쪽의 code를 건드리지 않았음
+
+이쪽에 focus하라고 하지 않았음
+
+그럴 필요가 없음
+
+여기도 똑같음
+
+ring-yellow에 focus를 써주지 않았음
+
+그 이유는 이 classname 위에 마우스를 갖다대면 알 수 있는데, 이 classname은 오직 CSS variable만 세팅한다는 것을 알 수 있음
+
+이쪽도 똑같음
+
+CSS variable만 세팅함
+
+가끔 다른 classname들이 여러 variable을 쓰는 것을 볼 수 있음
+
+예를 들어 이 ring-yellow-500은 ring opacity라는 variable을 정의하고 ring opacity(투명도)로 나눈 ring color값을 정의하고 있음
+
+그 말은 우리가 ring 색상의 opacity까지 변경할 수 있다는 것임
+
+그러니 위의 (opacity) variable을 조정하면 아래의 ring color도 바뀌겠지
+
+왜냐하면 color값은 opacity의 영향을 받음
+
+여기로 와서 ring opacity값을 0, 5, 10... 마음대로 바꿀 수 있음
+
+이것이 하는 일은 단지 다른 variable을 세팅하는 거였음
+
+보다시피 Tailwind는 정말 멋진 아키텍쳐임
+
+단지 variable을 세팅함으로써 아주 멋진 일들을 가능하게 해줌
+
+그러니까 이 classname에 focus를 붙일 필요도 없고 이쪽도 마찬가지임
+
+ring-2 classname에만 focus를 붙이면 됨
+
+여기서 모든 variable들을 가져오고 밑에서 그것을 사용하고 있음
+
+그러면 잘 되는지 확인 해봄
+
+여기로 와서 클릭하면 우리의 ring이 나왔음
+
+ring을 보여주고 싶었던 이유는 코드를 봤을때 더 감명받았으면 했음
+
+왜냐하면 이것들이 단지 여러개의 variable의 합이라는 것이 멋짐
+
+이것이 Tailwind의 힘을 보여주는데 오직 variable을 바꾸는데에만 사용하는 classname이 있음
+
+그리고 이 모든 variable을 가지고 값을 적용시키는 classname도 존재함
+
+즉 여기 보이는 variable들은 모두 변경이 가능함
+
+예를 들어 bg-yellow를 들여다보면 bg-yellow는 어떤 색을 bg-opacity라는 값으로 나눈 값을 가지고 있는데 그 bg-opacity가 바로 variable임
+
+그 말은 우리가 이 classname도 찾아서 사용할 수 있음
+
+직관적으로 classname을 찾아낼 수 있다고 전에도 말한 적 있음
+
+그럼 bg-yellow-500이 이런 variable들을 쓴다는 것을 알게 됐으니 이 variable들을 modify 할 수 있음
+
+background opacity를 써보면 bg opacity 설정 값이 100까지 있음
+
+여기서는 50정도로 하면 좋을 것 같음
+
+이제 달라진 것이 보이지
+
+이것이 다른 classname을 찾아내서 더 많은 커스터마이징을 하는 방법임
+
+TailwindCSS에서 사용할 수 있는 많고 많은 classname을 내가 다 보여줄 필요가 없음
+
+그냥 마우스 커서만 올리면 알 수 있음
+
+그러면 어떤 것을 바꿀 수 있는지 볼 수 있음
+
+이번에는 transition을 추가해봄
+
+이 button에 transition을 넣음
+
+클릭했을때 이렇게 나오기보다는 transition이 있는 것이 좋을 것 같음
+
+그러면 transition property를 사용해야겠음
+
+여기 보면 여러가지의 transition효과가 있음
+
+transition이 없을 때는 none, 모두에게 주려면 all, color에만 적용할 때, opacity에만, shadow 그리고 transform도 있음
+
+그럼 transition colors를 선택하고 어떤지 확인함
+
+colors를 선택하고 코드를 확인해보면, 이것은 대부분의 color와 관련된 variable을 가져다가 transition을 주고 있음
+
+font나 background, border, text decoration color를 바꿀 수 있고, svg(벡터 이미지)의 fill과 stroke도 조절할 수 있음
+
+아주 유용함
+
+다른 것도 확인해봄
+
+Transition all을 하면 모든 것에 transition효과가 적용됨
+
+그냥 transition이라고만 하면 color, bg, box shadow, opacity, transformation 등에 적용됨
+
+보다시피 고를 수가 있음
+
+우리는 그냥 transition으로 함
+
+box shadow를 바꿀건데 어쨌든 transition으로 감
+
+이제 확인해 보면 아름다운 transition 효과가 나타났음
+
+우리는 1초도 안 걸려서 transition이라고 써주기만 했음
+
+보다시피 Tailwind는 이렇게 작은 helper들이 있어서 우리 app을 전문적으로 보이게 해줌
+
+주어진 그대로 사용하기만 하면 됨
+
+물론 transition도 커스터마이징할 수 있지만 딱히 그럴 필요도 없음
+
+이 Transition이나 여기 shadow가 있는 box같은 것이 Tailwind의 장점인데 이것을 스스로 만들려면 힘듦
+
+여기 transition안을 보면 자체적으로 function을 사용하고 있음
+
+cubic bezier 그리고 필요한 value도 있음
+
+그러면 이제 transition을 이용해 멋지고 섹시한 button들을 만들어봄
+
+여기로 와서 두 줄에 모두 붙여넣기하고, color는 yellow에서 indigo와 teal로 바꿈
+
+이제 모두 멋진 transition이 적용됐음
+
+이제 진짜로 modifier를 다뤄볼거고 이것이 시간을 많이 절약해줌
+
+사용하기에 정말 간단하고 시간을 많이 절약해줘서 개발자들이 좋아하는 기능임
