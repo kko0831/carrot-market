@@ -1907,3 +1907,185 @@ cubic bezier 그리고 필요한 value도 있음
 이제 진짜로 modifier를 다뤄볼거고 이것이 시간을 많이 절약해줌
 
 사용하기에 정말 간단하고 시간을 많이 절약해줘서 개발자들이 좋아하는 기능임
+
+## 4.6 Modifiers for Lists
+
+이번 영상에서는 list를 다룰때 우리의 인생을 더 편하게 만들어 줄 modifier를 공부함
+
+react 개발자로써 아주 많이 사용하게 됨
+
+예를 들면 여기 list가 있음
+
+array.map은 아주 자주 함
+
+modifier를 사용하면 시간과 에너지를 아낄 수 있음
+
+먼저 여기에 ul태그를 만들어줌
+
+그리고 우리의 item들을 ul안에 넣음
+
+그 다음에 아주 간단한 array를 하나 만듦
+
+그리고 이 array를 map한 다음에 우리의 html을 return 해줌
+
+key는 index로 하면 다 됐음
+
+react를 사용하면 아주 흔하게 보게 되는 array.map 형태임
+
+이제 만약에 첫번째 child의 외관만 바꾸고 싶다면 어떨까
+
+이런 일은 빈번하게 일어남
+
+첫번째 child에게만 border를 추가하고 싶을 수도 있음
+
+우리는 일단 background 색을 먼저 바꿔봄
+
+그러려면 먼저 이렇게 first라고 쓰고, bg 그리고 blue 50으로 함
+
+그러면 이렇게 바로 적용됨
+
+아주 간단했음
+
+또 예를 들자면 last도 있겠지
+
+똑같이 bg-blue-50으로 함
+
+아주 잘 작동됐음
+
+우리가 아는 것을 사용하고 있음
+
+classname한 줄로 last child와 first child를 설정함
+
+onlychild일 때 사용하는 only라는 modifier도 있음
+
+이것이 onlychild라면 bg red 500으로 해봄
+
+그런데 only는 어디에도 적용되지 않았음
+
+왜냐하면 여기에는 여러 child가 있음
+
+만약 여기 array의 숫자들을 한개만 남겨준다면 only child가 되겠지
+
+이제 target으로 설정할 수 있고, list에 item이 하나라면 그것을 style 할 수 있음
+
+당연하게도 이것은 child selector를 사용함
+
+여기에 마법은 없음
+
+그냥 CSS property들을 사용하고, CSS selector들을 사용하는 것뿐임
+
+하지만 이것을 class에 넣음으로써, 아주 간단하게 사용할 수 있음
+
+여기에도 보면 background의 opacity를 조절할 수 있지
+
+이전 영상에서 봤던 것처럼 variable을 이용함
+
+only도 해봤으니까 계속 가봄
+
+이제 first, last나 only는 지우고, odd와 even(홀수,짝수)을 사용함
+
+주로 list가 있으면 첫번째 항목의 배경을 다른 것과 다르게 표현할 경우가 많음
+
+배경색을 다르게 해서 list처럼 보이게 함
+
+그러니까 odd를 설정해봄
+
+bg-blue-500으로 하고 even은 bg-yellow-500으로 함
+
+개발자로서 이것은 아주 간단함
+
+className을 지정해서 이것들을 target 할 수 있음
+
+odd는 1,3,5 even은 2,4...임
+
+지금은 그냥 투어만 하는거라고 했지
+
+이것을 다 기억하고 있을 필요는 없음
+
+무엇을 할 수 있는지 알려주는 것뿐임
+
+또 다른 멋진게 있는데 바로 empty임
+
+empty는 잘 모를 수도 있지만 Tailwind 기능이 아니고 그냥 CSS selector임
+
+하지만 Tailwind를 이용해서 더 간편하게 사용할 수 있음
+
+그럼 list를 A,B,C,D,E... 아무렇게나 만들어봄
+
+그런데 이번에는 d를 빈 값(empty)로 해봄
+
+이제 우리의 친구들에게 map을 써줌
+
+여기에는 그냥 li로 함
+
+그리고 우리의 친구(c)와 key로는 index(i)도 써줘야함
+
+그리고 이 모든 것을 ul안에다 넣음
+
+a,b,c와 empty(빈 값)이 있음
+
+여기 li에 bg-red-500 classname을 넣음
+
+그리고 vertical(세로)로 padding도 2만큼 줌
+
+잘 보면 a,b,c가 있고 빈 값이 하나 있음
+
+이것도 array를 구성하지만 글자가 없음
+
+여기에 써줬음
+
+이 자리에 empty가 들어감
+
+이렇게 empty를 사용하면 비어있는 element에 색상을 넣을 수 있음
+
+다시 한번 이것은 Tailwind의 마법이 아님
+
+이것은 그냥 empty라는 pseudo selector를 이용하는건데, 있는지 몰랐을 수도 있지만 Tailwind를 이용해 사용할 수 있음
+
+이렇게 멋지니까 보여주고 싶었음
+
+이제 list에 값이 채워져있지 않아도 style 할 수 있음
+
+주로 값이 empty일때 background color를 바꾸기보다는 그 empty한 값을 숨겨줄 수 있음
+
+그럴때 사용할 수 있는 className으로는 hidden이 있음
+
+이제 array에 빈 item이 있어도 그냥 hidden 으로 숨겨줄 수 있어.
+
+이것이 내가 자주 쓰는건데 대부분의 경우에 비어있는 값의 색을 바꿔줄 일은 없음
+
+empty hidden을 한다면 이것은 display none이랑 똑같음
+
+이번 영상에서 배울 것은 여기까지임
+
+별게 없어서 여기까지만 함
+
+list에서 사용하는 utility를 보여주고 싶었음
+
+다시 말하지만 이것은 tailwindCSS라서 할 수 있는 기능들이 아니지만, Tailwind가 className을 가지고 있어서 우리가 편리하게 사용할 수 있음
+
+Tailwind의 특별한 기능이 아니고 CSS 기능임
+
+그러면 다음 영상에서는 form에 관한 modifier들을 배움
+
+input이 필요한 경우와 필요하지 않은 경우 이 모든 것과 group selection에 대해서도 배움
+
+예를 들면 이런 질문을 하나 해봄
+
+우리가 마우스를 이 container 위에 얹을 때를 어떻게 부르면 좋을까
+
+예를 들면 이 Tony Molloy의 색상을 바꾸고 싶음
+
+우리는 마우스를 위에 올렸을 때 button의 색상을 바꾸는 방법은 알지
+
+하지만 마우스를 이 group 전체에 올렸을때에 이 글자의 색상을 바꾸려면 Tailwind에게 어떻게 말하면 될까
+
+내가 원하는 것은 이런거임
+
+Tony 글자에 마우스를 올려서 색상을 변하게 한다는게 아님
+
+그건 이미 어떻게 하는 지 알고 있지
+
+나는 내 마우스를 이쪽 프로필이나 아무 곳에 올려놓으면, 이 text의 color를 target으로 하고 싶음
+
+그것이 group selection이 됨
