@@ -2089,3 +2089,417 @@ Tony 글자에 마우스를 올려서 색상을 변하게 한다는게 아님
 나는 내 마우스를 이쪽 프로필이나 아무 곳에 올려놓으면, 이 text의 color를 target으로 하고 싶음
 
 그것이 group selection이 됨
+
+## 4.7 Modifiers for Forms
+
+form을 시작하기 전에 아주 멋진 group modifier에 대해 배워봄
+
+저번 시간에 말했던 것은 마우스를 이 group 위 아무 곳에나 올리면 이름 text의 글자색이나 avatar의 배경색을 바꾸고 싶다고 했음
+
+예를 들어 마우스를 여기에 올리면 avatar가 바뀜
+
+마우스를 여기에 올려도 아바타가 바뀜
+
+만약 일반적인 CSS에서 이것을 하려면 다음과 같이 해야함
+
+group을 만들어주고 마우스를 hover 했을때 아바타를 target함
+
+group 위에 마우스가 올라가면 avatar의 스타일을 바꿈
+
+이제 이것을 어떻게 만들 수 있는지 보여줄건데 당연히 이런 CSS는 작성하지 않음
+
+classname을 사용함
+
+이것이 Tailwind CSS의 핵심임
+
+먼저 우리가 target하고 싶은 그 group 안에 어떤게 포함되는지 Tailwind에게 알려줘야함
+
+예를 들어 계속 말하지만 나는 이 card 전체를 target으로 하고 싶음
+
+이것을 target으로 해서 내가 card 전체에 마우스를 올리면 avatar를 어떻게든 변화시키고 싶음
+
+스텝1은 Tailwind에게 무엇이 target하려는 group인지 말해줘야함
+
+우리의 경우에는 card의 container가 됨
+
+한번 지워보면 사라짐
+
+여기까지의 div가 card의 container임
+
+그래서 이 자리에 group이라고 씀
+
+그냥 group이라는 classname임
+
+아주 간단함
+
+스텝2는 그 group에 마우스를 hover 했을때 변화할 것을 정해줘야함
+
+먼저 classname을 이용해 group을 정해줬으니까, 이제 변화시킬 item을 지정해주면 되는데 내 경우에는 여기 있는 avatar였음
+
+이것이 avatar임
+
+한번 지워서 확인해봄
+
+이제 Tailwind에게 group은 알려줬고, 우리가 modify하고 싶은 item도 찾았음
+
+이제 Tailwind에게 알려줄 것은 group 위에 hover가 되었을때 background color를 red 300으로 바꾼다고 함
+
+잘되나 봄
+
+여기로 와서 보다시피 아주 아름답게 작동함
+
+마우스를 위에 올리면 잘 변하고 있음
+
+원한다면 classname위에 마우스를 올려서 확인하면 group이라는 classname이 hover 상태일때 뒤에 있는 이 classname이 적용된다고 나와있음
+
+아주 간단함
+
+다시 한번 이것은 제일 먼저 group이라는 classname을 찾아가서 그 group이 마우스 hover 상태일때 이 classname이 적용됨
+
+다시 한번 우리가 할 것은 뭐가 group인지 select 해주고, 그 안에서 group이 hover일때 어떻게 할지 정해줄 수 있음
+
+색상의 transition도 할 수 있는거 잊지마
+
+이제 확인해보면 아름다운 transition까지 보이지
+
+너무 간단하고 이것처럼 복잡한 hover 상태에도 CSS를 직접 쓸 필요도 없음
+
+당연히 이것이 group으로 할 수 있는 다가 아님
+
+group을 입력하고 자동완성을 보면 우리가 할 수 있는 아주 많은 것들이 나옴
+
+group이 first child일때, last child일때, only, odd, even일때 이것은 이미 이전 영상에서 해봤음
+
+group이 필요할때 어떻게 할지도 정할 수 있음
+
+예를 들면 input group이 필요할 때가 있을 수 있음
+
+이 모든 것이 바로 group modifier임
+
+이것을 설명하기 가장 쉬운 방법은 hover였음
+
+아주 간단했음
+
+우리가 할 건 group을 정해준 다음에, 그 group 안에서 group이 hover 상태일때 아니면 group이 first item이거나 무엇이든지 background color를 바꾸든지 무엇이든 할 수 있음
+
+그럼 이제 form에 대해서 얘기해봄
+
+selector를 form이랑 같이 사용하면 최고임
+
+Tailwind CSS와 함께 form을 만들고 red label도 보여주고 아니면 필수 입력 input을 보여줄 수도 있고 그 input이 valid한지 아닌지 이런 것들을 아주 간단하게 할 수 있음
+
+일단 여기에서 영상을 잠깐 멈추고 빠르게 form을 만들어서 옴
+
+form이 완성되면 돌아옴
+
+여기에 방금 말한 form을 만들어왔음
+
+다른 것은 다 지웠는데 걱정하지마
+
+나중에 다시 복원함
+
+지금은 이것이 우리의 form이고 Tailwind CSS에서 사용할 수 있는 modifier들을 봄
+
+기억할 건 이것은 Tailwind가 없이도 사용할 수 있는 CSS feature들임
+
+지금부터 해볼 것도 이미 CSS에 존재하는 것들임
+
+Tailwind가 마법을 부리는 것은 아님
+
+우리가 그 전에 원에다가 ring을 그렸었는데 그것은 일반적인 CSS에는 존재하지 않음
+
+ring이라는 property는 없음
+
+그거야말로 Tailwind가 우리에게 주는 helper임
+
+box shadow라는 기능을 활용해서 멋진 ring을 만들어줌
+
+지금부터 할 것들은,
+
+TailwindCSS가 없어도 사용할 수 있는 기능들이야.
+
+CSS가 가지는 selector를 TailwindCSS가 활용함
+
+그래서 우리가 할 것은 예를 들어 form 안에 input이 focus 되어있을때 생성되는 pseudo selector에 대해 봄
+
+이렇게 Username이나 Password에 focus가 갈때 pseudo selector는 true가 됨
+
+그것을 form에 적용해봄
+
+예를 들어서 form안에서 (within) focus가 되면 색상을 bg-blue-100으로 바꿈
+
+우리가 이 3가지 input에 focus하면 form에 변화가 생김
+
+focus일때 아닐 때(blur) 이것이 첫번째로 해볼거였음
+
+이제 우리 input 안에서 사용할 수 있는 것도 살펴봄
+
+input안에서는 이런 것을 할 수 있음
+
+예를 들어 input이 필요할때 border를 만들어줌
+
+border를 2만큼 줌
+
+그리고 border의 색상도 바꿔줌
+
+border color를 yellow로 500정도로 함
+
+보다시피 required input이 표현됐음
+
+엄청 간단하고 쉽지
+
+required를 지우면 모두 사라짐
+
+또 말하지만 이것은 Tailwind 마법이 아님
+
+확인해보면 required selector를 이용하고 있고 이것은 일반 CSS feature임
+
+하지만 Tailwind로 아주 편리한 방법으로 사용할 수 있음
+
+이번에는 invalid를 해볼까
+
+만약 invalid일때는 background를 red 500으로 함
+
+required이기 때문에 default값으로 invalid값이 됨
+
+input에 무엇인가를 입력하면 더 이상 required 상태가 아니기 때문에 invalid가 아니게 됨
+
+다시 말하지만 이것은 일반 CSS에서도 쓸 수 있음
+
+Tailwind를 꼭 쓸 필요는 없음
+
+Tailwind가 더 편리하게 해주기는 함
+
+계속 해봄
+
+여기에는 placeholder shown이라는 것도 있는데, placeholder를 보이고 있는지 아닌지에 따라 input을 커스터마이즈하게 해줌
+
+만약 여기에 placeholder shown을 쓰고 placeholder가 shown일떄 bg color를 teal 500으로 함
+
+지금은 value가 들어가있으니까 아무일도 일어나지 않았지만, 지워보면 보다시피 placeholder가 보일때의 input 스타일을 바꿀 수 있음
+
+placeholder 자체를 스타일 할 수도 있음
+
+원한다면 placeholder의 text를 red 500으로 바꿀 수도 있음
+
+placeholder의 색상이 바뀌었고, 입력 text의 색상은 그대로 black임
+
+많은 것을 해봤음
+
+다시 한번 말하지만 이거 외울 필요는 없음
+
+걱정말고 이런게 존재한다는 것만 알면 됨
+
+우리는 input을 disabled(비활성화)할 수도 있음
+
+예를 들어 여기를 disabled로 바꿔봄
+
+disabled를 하면 클릭이 불가능해짐
+
+여기는 클릭이 되는데 여기는 안 됨
+
+그럼 disabled를 다른데도 쓸 수 있겠지
+
+이번에는 disabled 되었을때 투명하게 만들어봄
+
+disabled된 input은 보이지 않게 됐음
+
+왜냐하면 disabled 시켰음
+
+다시 required로 바꾸고 이제 좀 변화를 줘봄
+
+이것이 required일때 background color를 yellow로 함
+
+500으로 함
+
+이번에는 invalid일때 background color를 red 500으로 함
+
+valid일때도 해볼까
+
+valid일때는 배경색을 teal 500으로 함
+
+valid로 만들어봄(value를 입력함)
+
+required도 해봤고 invalid도 됐고 valid도 확인했음
+
+app을 만들때 주로 background color만 변경하지는 않겠지
+
+대신에 우리는 border를 바꿔봄
+
+왜냐하면 사람들이 입력하는 input이 원래 border를 가지고 있고 invalid일때는 red border를 가지잖아
+
+이런 것들을 할 수 있음
+
+Tailwind를 이용해서 이런 모든 것들을 할 수 있다는게 참 좋은 것 같음
+
+또 말하지만 Tailwind라서 할 수 있는 것은 아님
+
+Tailwind없이도 할 수 있는 CSS지만 이렇게 할 수 있다는 것을 보여주고 싶었음
+
+Tailwind를 사용하면 거의 모든 것이 이미 만들어져있고 일일히 CSS 코드를 칠 필요가 없음
+
+내 생각에 최고인 것은 이제 배워볼 peer modifier임
+
+잠깐 녹화 멈추고 좀 지우고 왔음
+
+이제 이것이 내 form임
+
+background color도 지웠고 input과 submit만 남아있음
+
+이 input도 좀 괜찮아보이게 만들었음
+
+이제 peer modifier를 보여줄건데 이것은 사람들이 아주 많이 쓰는 패턴을 implement 해줌
+
+그러면 여기에 user를 위한 에러 메시지도 넣을 수 있음
+
+만약에 user가 이것을 submit하면 invalid인지 아닌지 말해줄 수 있음
+
+그럴 경우에 input invalid같은 경고창을 띄울 수 있음
+
+이제 설명해봄
+
+먼저 label을 만들어봄
+
+예를 들면 이렇게 써봄
+
+이제 이 label을 input이 invalid 할때만 보여주고 싶음
+
+지금 상태는 invalid함
+
+값을 넣으면 이 input은 더 이상 invalid가 아니어야함
+
+그러니까 이 안내문을 숨겨줘야함
+
+이것을 하기 위해 사람들은 어떤 로직을 생각함
+
+이런 것을 하려면 react.js가 필요하다고 생각할 거니까 state를 가지고 무엇인가 어떻게 해야함
+
+정답은 NO임
+
+우리에게는 peer modifier가 있음
+
+이것은 굉장히 멋진 기능임
+
+peer modifier는 이 input의 상태에 따라서 여기 span의 스타일을 변화시킬 수 있음
+
+peer modifier는 이 span의 style을 바꿀 수 있게 하는데, 그 조건이 이 input의 state임
+
+앞에서 했던 group modifier 기억나
+
+우리는 group으로 가서 class로 group을 써줬어야 했음
+
+그리고 item으로 가서 group이 hover일때 어쩌구저쩌구 했지
+
+이번에는 먼저 peer를 label 해줌
+
+이쪽으로 와서 이것이 우리의 peer라고 써줌
+
+다음으로 여기 span에 와서 peer modifier를 사용해봄
+
+peer라고 씀
+
+peer에 관련된 이렇게 많은 옵션들이 있음
+
+예를 들면 peer가 invalid일때로 해봄
+
+그때는 text-red-500으로 함
+
+input이 우리의 peer라서 여기에 peer라고 표시해줬음
+
+그 다음 그 옆에 있는 item에는 peer가 invalid일때 무엇인가를 해달라고 했는데 이 물결표시를 사용했음
+
+CSS의 멋진 기능임
+
+peer를 받아서 이것이 invalid일때 sibling에 대해서 이 class를 실행해줌
+
+잘 되는지 확인해봄
+
+우리는 input의 state에 따라서 CSS를 modify하고 있음
+
+또 말하지만 이것은 Tailwind라서 할 수 있는게 아님
+
+그냥 Tailwind로 이용할 수 있는 멋진 API임
+
+peer를 지정해 주고 peer invalid를 써주면 됨
+
+많은 사람들이 이 sibling selector의 존재를 몰랐음
+
+어떻게 사용하는지도 몰랐음
+
+하지만 아주 쉽게 활성화 할 수 있지
+
+아주 사용하기 쉬움
+
+이것을 더 멋있게 만들 수 있는데 peer 앞에 와서 default로 hidden을 써줌
+
+default값으로는 hidden이고 만약 peer가 invalid라면 그때 보이도록 설정을 해주면 됨
+
+visible이 아니어서 적용이 안 됐나봄
+
+block이라고 써줘야함
+
+이것은 react.js기능처럼 보이지만 사실은 아니었음
+
+만약에 react.js로 이것을 만들려고 했다면 if else하고 이것저것 해야했음
+
+하지만 여기서는 input의 state만 정해주면 Tailwind가 hide를 조정해줌
+
+여기 보면 default로는 display none이 되어있음
+
+여기 이 peer가 invalid일 때 display block으로 바뀜
+
+peer가 invalid일때 text color도 바뀔거고, 이번에는 다른 것을 이용해서 같은 작업을 해봄
+
+이번에는 peer invalid 대신에 peer valid를 써봄
+
+peer가 valid할때 text color를 teal로 바꾸고 Awesome username이라고 띄워줌
+
+지금은 invalid하고 글자를 써보면 Awesome username으로 바꿨음
+
+이것을 javascript도 아니고 CSS만 가지고 했음
+
+또 말하지만 이것은 Tailwind의 기능이 아니고, CSS의 sibling selector를 아주 기깔나는 방법으로 사용했음
+
+이 부분이 sibling을 select함
+
+당연히 peer는 peer selector보다 앞쪽에 위치 해야함
+
+왜냐하면 그것이 peer selector가 작동하는 방법임
+
+peer가 제일 먼저 오고 그 다음으로 다른 것들이 와야함
+
+만약에 앞뒤를 바꿔서 해본다면 전혀 작동하지 않지
+
+peer가 먼저 와야함
+
+이것은 CSS가 만들어진 방식 때문에 생기는 한계점임
+
+input 뒤에 따라오는 follower들은 볼 수 있지만, 그 이전 순서를 볼 수는 없는데 CSS가 top to bottom으로 작동하기 때문임
+
+반대로 갈 수는 없음
+
+위에서 아래로만 볼 수 있음
+
+당연히 이렇게 peer valid만 가능한 것은 아니고 다른 것들도 되겠지
+
+지루하니까 peer valid는 그만하고 바꿔봄
+
+우리가 가진 이 모든 옵션들을 봄
+
+이것 말고 hover는 어떨까
+
+이것은 amber 색상으로 함
+
+이것도 CSS로 열심히 만든 것 같지만 아니지
+
+classname만 가지고 이것을 다 했음
+
+여기까지가 우리 form selector의 마지막임
+
+우리 selector의 마지막 순서를 만나봄
+
+그것도 꽤 멋있어서 보여주고 싶음
+
+그 다음으로는 반응형 디자인(responsive design), 다크모드도 Tailwind CSS로 만들어봄
+
+스포일러 하자면 다크모드는 지금 한 것만큼 간단함
