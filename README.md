@@ -4189,3 +4189,313 @@ Email address는 더 이상 점프하지 않음
 재미는 없었음
 
 하지만 TailwindCSS를 연습할 수는 있었음
+
+## 5.2 Auth part Two
+
+이번 영상에서 우리는 Tailwind Plugins에 대해서 이야기함
+
+이유는 Form의 기본 스타일을 갖도록 해주는 Plugin을 사용하고 싶기 때문임
+
+지금 input들은 여기 보다시피 별로임
+
+얘네들을 바꾸고 싶음
+
+그래서 무엇을 할거냐면, Tailwind Forms라 불리는 코어 Plugin(또는 오피셜 Plugin)을 설치함
+
+Plugin은 기본적으로 Tailwind 환경에서 부가적인 기능을 더해주는데 어떤 코어, 핵심 Plugins들도 존재함
+
+인기 기능을 위한 plugin인데, 이런저런 이유로 아직 메인 프로젝트에 속해있지는 않음
+
+하지만 원한다면 설치할 수가 있음
+
+예를 들면 이렇게 typography plugin을 설치한다면 이 "prose" 클래스 이름을 더할 수 있음
+
+우리의 경우에는 forms라는 plugin을 설치함
+
+input에 reset layer를 추가할 수 있는 plugin임
+
+우리 코드를 절약해줌
+
+그래서 이것을 복붙함
+
+그리고 여기에 install 해줌
+
+터미널에 npm i @tailwindcss/forms@0.4.0 -D 입력함
+
+그럼 다 끝냈으면 tailwind.config.js로 가봄
+
+그럼 여기에 배열을 넣어줌
+
+그리고 보다시피 이 라인을 저장하는 순간, form들이 약간 바뀌었음
+
+그런 것 같음
+
+그럼 시작할 준비가 됐음
+
+이제 label하고 input을 손봄
+
+그럼 form에다가 className을 적고 전부 flex-column으로 해줌
+
+label은 내 생각에 꽤 쉬울 것 같음
+
+클래스 이름을 만들어야함
+
+다 끝난 것 같음
+
+이것이 내 Phone이 됨
+
+다 됐음
+
+그럼 이제 form에 여기 div에다가는 className으로 margin-top을 1로 함
+
+먼저 input을 해줌
+
+Email input을 먼저 해치움
+
+Email input은 우선 외관을 리셋시켜야함
+
+input이 갖고 있을지도 모르는 기본 스타일을 리셋해줌
+
+w-full을 해줄거고 어떻게 보이는지 한번 봄
+
+나쁘지 않음
+
+하지만 패딩이 좀 필요할 것 같음
+
+패딩을 좀 추가해볼건데 여기에다 좌우 패딩 4를 주면 훨씬 나음
+
+그럼 우리 input으로 돌아가서 이제 이것을 둥글게 만들어야함
+
+그림자도 넣어야하고 그리고 focus 상태일때의 스타일을 추가해야함
+
+placeholder도 줌
+
+focus-outline은 none이어야 하고 outline은 필요 없으니까 그러고나서 focus를 해야함
+
+어쩌면 주변에 원을 추가할 수도 있음
+
+그럼 끝났음
+
+이것이 바로 우리 input임
+
+나쁘지 않음
+
+마음에 듦
+
+이제 button을 손볼 차례임
+
+지금 이 부분은 일단 스킵하고 button부터 봄
+
+우리는 orange를 메인 색상으로 해야할 것 같음
+
+전부 orange로 쭉 밈
+
+고로 배경색을 해봄
+
+orange-500이 됨
+
+hover over에 bg-color도 orange로 함
+
+text는 white임
+
+여기도 똑같이 padding-x에 4를 줌
+
+input하고 똑같이 border, border-transparent, rounded-md함
+
+나쁘지 않음
+
+이제 shadow를 걸어줘야함
+
+그리고 text도 small이어야 하고, font는 medium으로 함
+
+그럼 이제 한번 봄
+
+그래서 여기 위에 마우스를 올려보면 마음에 듦
+
+이건 좋아보이지 않음
+
+그래서 focus:ring-2함
+
+또 focus:ring-offset도 2가 되어야함
+
+그리고 하고 싶다면 hover over에 transition을 걸어줄 수도 있음
+
+그리고 focus:outline-none함
+
+그럼 어떻게 보일까
+
+그럼 이제 이 button에 margin-top을 줘봄
+
+너무 크지도 않고 그럼 이제 다 됐음
+
+우리의 button임
+
+5로 고침
+
+이제 Phone number의 input을 손볼 차례임
+
+Phone number input에는 이 82를 이 input 안에 넣고 싶음
+
+이거 마음에 듦
+
+이 input도 좋고 이 button도 좋음
+
+이제 시작해봄
+
+이제 이것을 flex로 만들어주기만 하면 됨
+
+이렇게 rounded를 넣어줌
+
+이제 마치 이 82도 input에 속해있는 것이라고 사람들이 생각하게끔 일종의 trick을 만듦
+
+그래서 우리는 span에다 flex를 넣어줘야함
+
+그리고 items는 center로 함
+
+그리고 justify도 center로 함
+
+고로 얘는 center로 올거고 몇가지 더 추가함
+
+여기서 보여주고 싶은 것이 있는데, 만약 이 두 가장자리만 둥글게 만들고 싶다면
+
+이 가장자리는 둥글게 하고 싶지 않음
+
+그럴 경우에는 rounded-l-medium을 쓰면 됨
+
+그리고 border를 하면 테두리가 보임
+
+딱 한쪽 부분만 rounded 되어있음
+
+그래서 예를 들면 이 경우에 이렇게 rounded 할 수도 있음
+
+그럼 오직 이쪽 부분만 둥글어졌음
+
+꽤 좋음
+
+만약 위에 마우스를 올려두면 Tailwind가 무엇을 해주는지 볼 수 있음
+
+이것은 약간 shortcut 같은 것임
+
+마음에 듦
+
+그럼 이제 오른쪽 테두리는 없애줘야함
+
+그럼 보다시피 input 안에 있는 것처럼 보이지만, 실제로는 input이 아님
+
+엄청 멋지다고 생각함
+
+input의 일부분이면서 disabled된 것처럼 보임
+
+원한다면 이것을 select-none으로 만들 수도 있음
+
+그럼 이것을 select 할 수 없게 됨
+
+물론 모든 사람들의 번호가 이 숫자(82)로 시작하지는 않는다는 것을 앎
+
+이런 것을 보여주고 싶었음
+
+멋진 기능이라고 생각함
+
+기능은 아니고 멋진 트릭을 씀
+
+Tailwind를 쓰는 모두가 사용하는 좋은 패턴임
+
+다들 이렇게 쓰고 많은 웹사이트에서도 봐왔음
+
+우리 input을 손봄
+
+평소에 하는 거랑 같음
+
+이전에 했었음
+
+사실상 이 input을 복사하면 될 것 같음
+
+그냥 복사해와서 className까지 여기에 붙여넣음
+
+그럼 다 됨
+
+이 rounded는 보기 좋지 않음
+
+그래서 우리가 할 것은 저 rounded를 없애버리는 것임
+
+그래서 여기에 rounded를 하고 싶은데, 0이 아니라 none임
+
+어떻게 보이는지 봄
+
+거의 다 했음
+
+이것을 이 “Or enter with”에 mt-6으로 마무리해봄
+
+그리고 여기에 relative 클래스를 넣어줌
+
+그 이유는 금방 알게 됨
+
+그 이유는 뭐냐하면 바로 여기에 absolute를 할거기 때문임
+
+그러니까 className을 absolute로 함
+
+flex를 줌
+
+왜냐하면 이것을 하고 싶었음
+
+아주 심플함
+
+아주 쉬움
+
+이제 무엇을 하고 싶냐면 이쪽으로 와서 여기 className을 relative로 줌
+
+그리고 여기 이 span에 bg-white를 함
+
+text-center도 함
+
+이제 중앙에 있음
+
+마음에 듦
+
+그래서 이제 여기로 와서 padding을 줌
+
+그럼 거의 다 됐음
+
+이것이 바로 relative랑 absolute를 조합할 수 있는 방법임
+
+그럼 다 끝났음
+
+margin-top을 8로 해줌
+
+그럼 이제 이 두 button들을 작업해봄
+
+그럼 우선 이 button들의 container에 className을 달아봄
+
+그리고 margin top은 6으로 줌
+
+그리고 첫번째 button에 집중해봄
+
+지금까지 해왔던 거랑 같이 다른 녀석들하고 거의 동일하게 500으로 함
+
+이것은 트위터고 이것을 복사해서 여기에 붙여 넣어줌
+
+이것은 깃헙 버튼임
+
+클릭할 수 있는 버튼들임
+
+이것은 좀 멀리 간 것 같음
+
+2로 함
+
+그럼 이제 끝임
+
+이것이 우리 시작 화면임
+
+폰 번호를 입력할 수 있고 82를 찾아봄
+
+너무 큼
+
+Email이면 "Get login link"라고 뜨고 Phone이면 "Get one-time-password"라고 뜸
+
+또는 소셜 로그인 버튼도 누를 수 있고 이것으로 다 끝냈음
+
+약간 짜증나는 화면이었음
+
+다음 영상에서 봄
+
+코드는 깃헙에 있음
