@@ -6715,3 +6715,99 @@ overflow-y-scroll이라고 써줌
 우리가 해냈음
 
 이것은 Stream Screen이 어떻게 보일지에 관한거였음
+
+## 5.16 Add Stream
+
+이제 Screen의 마지막 부분을 만들고 끝냄
+
+바로 LiveStream Screen을 만드는 것임
+
+그리고 LiveStream Detail을 보여주고 싶은데 우리가 본 것과 비슷함
+
+이런 식으로 LiveStream 목록을 보여줌
+
+만약 /streams/1로 가면 우리가 item을 볼때하고 비슷함
+
+/items/1로 가보면 Talk to seller하고 Similar items를 제외하면 매우 유사함
+
+보다시피 엄청 비슷함
+
+Live Stream이나 플랫폼을 만들때 제품을 판매하는 것이라고 생각하기 때문에 이렇게 했음
+
+그래서 거의 비슷하게 만들려고 함
+
+그리고 또 /items/upload에서 form에 Name이 없다는 것을 알게 됐음
+
+그래서 Name을 추가해줬고 이것을 수정하는동안 Upload form하고 LiveStream을 만드는 form이 같다는 것을 알았음
+
+차이점은 photo의 유무뿐임
+
+제품을 등록할 때는 사진이 필요하지만 LiveStream은 동영상임
+
+우리가 해야할 것은 그냥 Upload form을 복붙하는 것임
+
+만약 코드를 원하다면 이 강의 영상 위쪽에 Github 링크를 보면 됨
+
+이 div만 빼고 복사할건데 이 div에는 label이 있고 이 label은 photo 아이콘을 갖고 있기 때문임
+
+그래서 upload.tsx 파일의 Upload form에서 그 div 밑의 모든 것을 복사해줌
+
+그리고 약간 리팩터링(refactoring)도 해봤는데 왜냐하면 우리가 이런식으로 className을 쓰고 있다는 것을 알게 됐음
+
+이렇게 className을 쓰고 있는 div를 갖고 있었음
+
+className="my-5" 이런 식임
+
+이것은 좀 일관성이 없음
+
+우리는 이런 방식으로 많이 했었음
+
+어떤 div는 위아래로 margin을 가지고 어떤 것은 그렇지 않음
+
+그래서 margin top 같은 것을 추가하는 대신에 space를 줬었음
+
+항상 까먹긴 하는데 space가 margin보다 좀 더 나은 방법 같음
+
+margin을 추가하는 것보다 훨씬 나음
+
+margin top을 추가하고 여기도 추가함
+
+이쪽에도 넣는 것은 효율적이지 않음
+
+그래서 여기에도 똑같이 넣어줌
+
+이제 다시 이것을 복사해서 붙여넣음
+
+이것은 Create Stream Screen이었음
+
+보다시피 엄청 쉬움
+
+그러면 이제 /streams/create로 가봄
+
+이 화면에서 Stream 혹은 Product의 Name을 입력 받을거고 Price랑 Description도 입력 받음
+
+그 다음에 Upload item 대신에 Go live라고 써줌
+
+이제 다 됐음
+
+이것이 만들고 싶었던 마지막 Screen 부분이었음
+
+이제 정말 다 끝났고 Tailwind를 많이 연습해봤으면 좋겠음
+
+완전히 끝난 것은 아님
+
+다음 영상에서는 navigation bar를 만들어봄
+
+layout component 같은 것을 만들건데 하단에 사용자에게 보여줄 navigation bar랑 상단에 보일 제목을 만듦
+
+더 앱 같이 보이게 만들려고 함
+
+웹사이트의 경우에는 이렇게 하면 안 좋아 보이기 때문에 어떻게 해야할지도 고민해야함
+
+만약 화면을 크게 늘리거나 큰 모니터를 쓰면 보다시피 이것이 썩 좋아보이지는 않잖아
+
+하지만 우리가 한 것에 대해서는 꽤 만족함
+
+진짜 데이터로 빨리 해보고 싶음
+
+엄청 재미있음
