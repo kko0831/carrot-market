@@ -6811,3 +6811,247 @@ layout component 같은 것을 만들건데 하단에 사용자에게 보여줄 
 진짜 데이터로 빨리 해보고 싶음
 
 엄청 재미있음
+
+## 5.17 Layout part One
+
+이 영상에서는 간단하게 좀 고쳐볼건데 우리의 앱이 큰 화면에서 매우 못생겨지는 문제를 해결해봄
+
+그러면 _app.tsx 파일로 가서 Component를 div로 감싸줌
+
+여기 안에다 넣음
+
+이제 이 div에는 w-full이라는 className을 줄거고 가능한 많은 space를 확보함
+
+max-w-lg(512px)라고 써줄거고 좌우에 margin을 auto로 주는 mx-auto를 이용해서 div를 중앙에 배치시킴
+
+만약 div를 중앙에 놓고 싶다면 width를 설정해준 다음에 그리고 양쪽 margin을 auto로 설정해주면 됨
+
+또 그 div는 block이어야 함
+
+그러면 div가 중앙에 놓아짐
+
+이제 이 화면을 늘려보면 보다시피 모바일 전용 웹사이트가 됐음
+
+이 div를 조금 더 넓히고 싶다면 max-w의 lg를 더 크게 xl로 바꾸면 정한 한계까지만 커짐
+
+이것은 하고 싶은대로 하면 됨
+
+이것은 간단한 수정이었음
+
+이런 수정을 한 이유는 이미 충분히 Tailwind를 사용했기 때문임
+
+우리는 Tailwind로 많은 작업을 했음
+
+반응형 디자인을 하고 싶지 않음
+
+이런 디자인을 더 큰 화면에 적용시키고 responsive modifier를 쓰는 것을 녹화하지 않음
+
+Tailwind로 반응형 디자인을 하는 것은 쉬움
+
+하지만 이렇게 계속 하다보면 Tailwind UI 클론으로만 영상 10개를 찍어야함
+
+이정도면 적당했고 이제 다음 섹션으로 이동함
+
+이제 무엇을 할거냐면 모든 Screen에 적용되는 title과 navigation bar component를 만듦
+
+원하던 것들임
+
+navigation bar는 tab bar처럼 할건데 만약 이것이 실제 앱이었다면 Tailwind로 tab bar를 만들었음
+
+그러면 이제 새 폴더를 만들어줄건데 이름은 components라고 해줌
+
+안쪽에는 layout이라는 파일을 만들어줌
+
+layout.tsx라고 써줌
+
+div를 return 해줌
+
+안쪽 부분은 나중에 만듦
+
+먼저 props를 만들고 interface LayoutProps라고 써줌
+
+이것은 typescript를 쓸때만 할 수 있음
+
+만약 typescript를 쓰고 있지 않다면 30초만 기다려줌
+
+그 다음에 children을 받아야하니까 이렇게 써주고 type은 React.ReactNode가 됨
+
+다음에는 title을 받을건데 어떨 때는 안 받을 때도 있음
+
+type은 string으로 해줌
+
+돌아가기 버튼이 있다면 canGoBack도 받음
+
+이것은 boolean이 됨
+
+hasTabBar도 만들어주고 이것도 boolean이 됨
+
+여기에서는 props를 받을건데 이 props는 title, canGoBack, hasTabBar, 그리고 children까지 방금 만든 것들을 받게 됨
+
+type은 LayoutProps임
+
+이제 어떻게 할거냐면 이 component를 모든 페이지에 넣음
+
+그리고 페이지를 2개의 div로 감쌈
+
+하나는 상단에 navigation bar고 children이 들어간 다음 하단에는 tab bar가 놓임
+
+이 화면의 메뉴가 있는 tab임
+
+tab bar는 항상 보이지는 않고 hasTabBar이어야 tab bar가 보이게 함
+
+tab bar를 가질때만 보이게 함
+
+그러면 이제 header부터 만듦
+
+이 부분은 엄청 간단함
+
+그냥 흰 배경만 만들면 됨
+
+매우 간단함
+
+이 div에서 className이라고 써주고 bg-white라고 함
+
+w-full도 쓰고 text는 lg가 될거고 font-medium 그리고 위아래로 padding을 4씩 줌
+
+그리고 고정되게 만들어야함
+
+그러면 fixed를 써주고 이제 거의 다 된 것 같음
+
+flex랑 items-center도 해줘야함
+
+그리고 안에 있는 상단 bar로 title을 보내야함
+
+그러니 title이 존재할 때만 여기에 title을 적어줌
+
+만약 title이 존재하면 title 내용의 span을 보여줄거고 아니면 아무것도 보여주지 않음
+
+그러면 이것이 어떻게 보일까
+
+layout을 우리의 홈페이지에 적용해봄
+
+홈페이지에서 layout을 적용해볼건데 pages로 가서 index 파일에 들어가봄
+
+이 component를 모두 복사하고 Layout을 import함
+
+그리고 이 component는 children이 됨
+
+그리고 title은 "홈"이라고 함
+
+저장해주면 새로고침이 됨
+
+하지만 justify-center를 넣는 것을 깜빡했음
+
+justify-center를 추가해줌
+
+이것이 우리의 navigation bar임
+
+조금만 더 작게 만듦
+
+text를 다른 색으로 해볼까
+
+orange라든지 마음대로 하면 됨
+
+이제 이것을 모든 페이지에 적용시킴
+
+하지만 보다시피 Screen의 위쪽 공간을 조금 띄워줘야함
+
+왜냐하면 navigation bar에 가려져 있음
+
+index에서 py를 너무 많이 쓰니까 그 대신에 layout.tsx에 있는 children에 py를 줘봄
+
+일단 children을 div 안에 넣어봄
+
+이렇게 div를 만들어주고 안에 children을 넣음
+
+그리고 className을 써주고 py-10을 넣어줌
+
+이 padding은 navigation bar나 tab bar가 밑에 있는지에 따라 바뀜
+
+어떤 경우에는 tab bar가 있겠지만 항상은 아님
+
+좋은 생각이 있는데 pt(padding-top)을 16px으로 줌
+
+보다시피 홈에 있는데 첫번째 제품이 잘 보이고 있음
+
+나중에는 children의 padding bottom을 어떻게 설정해야할지 고민해야함
+
+navigation bar가 무엇인가를 가리지 않도록 해야함
+
+왜냐하면 어떤 때는 tab bar가 있을거고 어떤 때는 없음
+
+계속 해봄
+
+이 Screen에서는 tab bar가 필요할 것 같음
+
+이 경우에는 hasTabBar를 써줌
+
+그러면 이제 tab bar를 가질거고 className이 조금 바뀌어야 할 것 같음
+
+그리고 이것은 우리가 만들었던 className에 관한 utility function을 써볼 차례임
+
+여기 있음
+
+새 폴더 안에 새로 파일을 하나 만들어 줄건데 libs/ 안쪽에는 utils.ts라는 파일을 만듦
+
+이 폴더는 잘 만들어졌음
+
+이것은 파일이어야 하는데 utils.ts 파일을 만들어줌
+
+이 function은 첫번째가 됨
+
+export 해줌
+
+여기에서 cls를 import 해주고 layout에서도 cls를 써줌
+
+왜냐하면 tab bar를 가지면 Screen의 padding bottom이 달라져야 하기 때문임
+
+한번 해봄
+
+이것은 지워주고 cls를 써줌
+
+첫번째로는 pt-16이 들어감
+
+그 다음에는 hasTabBar가 있으면 pb-16을 줄거고 아니라면 아무것도 안 해줌
+
+보다시피 이 경우에는 New iPhone 14하고 끝 사이에 간격이 있음
+
+아주 좋음
+
+이제 navigation bar를 해봄
+
+이 navigation bar도 고정되어야 함
+
+배경은 흰색이어야 하고 border 그런것들을 위쪽의 bar하고 똑같이 해줌
+
+그리고 5개의 children을 가져야 할 거 같음
+
+그러면 className을 써줌
+
+다 똑같을 것 같으니까 그냥 복붙해도 될 것 같기는 함
+
+어쨌든 fixed도 써주고 이 경우에는 bottom-0을 써줌
+
+아래쪽 padding은 좀 더 크게, 위쪽은 작게 줘봄
+
+어떻게 보일지는 잠시 후에 보게 됨
+
+flex랑 justify-between도 써줌
+
+그리고 items-center까지 씀
+
+navigation bar가 생겼음
+
+이제 span을 만들 시간임
+
+nav 안쪽에 span을 5개쯤 만들어줌
+
+span이 아니고 link임
+
+우리는 link를 만들어야 됨
+
+동네생활, 채팅방, Stream, Profile을 포함해서 5개의 link를 만들어야 함
+
+먼저 span을 써주고 5개를 만들어줌
+
+다음 영상은 이 Layout의 part 2가 됨
