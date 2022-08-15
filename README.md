@@ -7309,3 +7309,81 @@ class를 className으로 바꿔줘야 하고 여기 밑의 width와 stroke-line 
 layout부분은 이제 끝났음
 
 아무데나 가서 페이지를 layout component로 감싸줌
+
+## 5.19 Conclusions
+
+UI부분을 끝냈고 tailwind CSS도 다 했음
+
+이것을 모두 했음
+
+앞으로 오랫동안 UI에 대해서는 다루지 않음
+
+다음 섹션에서는 백엔드를 설정할거고 진짜 데이터를 가지고 해봄
+
+다시 UI로 돌아와서 진짜 데이터들을 갖고 해봄
+
+이 섹션의 핵심은 엄청나게 신기하거나 재밌게 만드는게 아니라 최대한 연습을 많이 하도록 하는게 핵심이었음
+
+우리가 이 섹션에서 정말 많이 연습했을거라고 확신함
+
+장담할 수 있음
+
+그래서 조금 지루하고 tailwind CSS가 짜증났을 수도 있음
+
+우리가 한 것은 tailwind CSS밖에 없음
+
+이제 tailwind CSS는 조금 쉴 시간임
+
+그것이 다음 섹션이 됨
+
+하지만 이 섹션을 마쳤다면 tailwind가 좀 더 편해졌을거라고 생각함
+
+왜냐하면 계속 하면 할수록 더 익숙해짐
+
+이제 무엇을 할거냐면 코드를 정리할건데 react component로 쪼갬
+
+이 New iPhone의 component들을 복붙하는 대신에 쪼개진 각각의 react component에 넣음
+
+여기의 question component나 chat component나 stream component나 여기 circle, profile, avatar 등등으로 쪼갬
+
+가능한 많은 component로 나눔
+
+typescript를 이용해서 props들의 type을 지정해줄거고 카메라에 대해서는 하지 않을건데 엄청 지루하기 때문임
+
+하지만 대신에 이 영상 위쪽의 링크에는 남겨놨음
+
+만약 어떻게 코드를 정리했는지 궁금하다면 component들을 복붙하면 됨
+
+링크를 위에 남겨놨음
+
+하지만 스스로 해보는 것을 추천함
+
+이렇게 연습하는게 좋다고 생각함
+
+그냥 평범하고 식상한 코드를 작성해보기도 하고 어떻게 className을 다루는지도 보고 리팩터링(refactoring)도 좀 해볼 수도 있음
+
+여기에 border를 넣을 필요가 없을 수도 있음
+
+divide className도 사용해 볼 수 있음
+
+스스로 코드를 정리해보는 것은 정말 좋다고 생각함
+
+코드를 혼자 써보고 정리해보면 개발자로서 성장시켜줌
+
+그리고 자주 하는 실수들도 확인할 수 있음
+
+확실히 리팩터링하면서 엄청 도움이 됐음
+
+가지고 있던 나쁜 습관들에 대해 알게 됐음
+
+이 영상 위쪽에 링크는 남겨놓음
+
+input이나 textarea나 button 같은 component들을 찾아볼 수 있음
+
+그런 것들을 링크에 남겨놓음
+
+다음 섹션에서 봄
+
+백엔드를 만들기 시작함
+
+그리고 말했다시피 만약 지루했거나 tailwind CSS에 조금 짜증이 났어도 괜찮음
