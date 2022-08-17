@@ -7535,3 +7535,105 @@ pages랑 components 폴더를 바꿔주기만 하면 됨
 이제 진짜 데이터를 가지고 이 앱을 만들어봄
 
 다음 영상에서는 Prisma에 대해 공부함
+
+## 6.1 What is Prisma
+
+이번 영상에서는 Prisma가 무엇인지, 어떤 점에서 좋은지 간단히 설명하려고 함
+
+이미 Prisma가 무엇인지 알고 있고 좋아한다면 다음 영상으로 가서 셋업을 시작해도 좋음
+
+이번 영상에서는 Prisma를 설명함
+
+이전에 Prisma에 대해 들어본 적 없거나 들어봤지만 잘 모르는 경우, 이번 영상이 도움이 됨
+
+Prisma는 Node.js와 Typescript ORM임
+
+ORM은 Object Relational Mapping이라는 뜻이고 기본적으로 번역기의 역할을 한다고 생각하면 됨
+
+자바스크립트 혹은 타입스크립트 코드와 데이터베이스 사이에 다리를 놓아줌
+
+SQL 같은 데이터베이스 언어를 작성하지 않고 타입스크립트 코드만 작성하는게 더 좋기 때문임
+
+타입스크립트를 사용하면 오류가 발생하기 전에 알려줌
+
+알다시피 타입스크립트는 타입을 사용해서 문자열을 써야하는 자리에 숫자를 쓴다든가 하면 경고를 받게 됨
+
+아주 편리한 기능임
+
+Prisma를 사용하면 더 편리하게 데이터베이스를 사용할 수 있음
+
+Prisma를 사용하기 위해서는 먼저 Prisma에게 데이터베이스가 어떻게 생겼는지를 schema.prisma라는 파일에 설명해줘야 함
+
+이 파일에서 Prisma에게 데이터의 모양을 설명해줌
+
+예를 들면 이렇게 데이터에는 id, title, content가 있음
+
+string 타입인데 content는 required가 아니니까 이렇게 물음표로 표시해줌
+
+published는 true 혹은 false일건데 기본적으로는 false임
+
+author는 User 타입인데 User는 또 다른 model임
+
+이렇게 Prisma에게 모든 데이터에 관해 서술해 줄건데 보다시피 거기에 사용되는 언어가 읽고 쓰기에 아주 편함
+
+이렇게 Prisma에게 전부 설명해주고 나면, Prisma는 데이터베이스의 타입에 관해 알게 됨
+
+아주 좋은 일임
+
+Prisma가 이런 타입에 관한 정보를 알고 있으면 client를 생성해 줄 수 있음
+
+client를 이용하면 타입스크립트로 데이터베이스와 직접 상호작용할 수 있음
+
+Prisma에게 데이터베이스가 어떻게 생겼는지를 설명해주면 Prisma는 client를 생성해줌
+
+그 client 안에는 필요한 모든 name이 들어있음
+
+예를 들어서 데이터베이스에 User라는 model이 있다고 해봄
+
+그런 상태에서 client를 만들면 자바스크립트 코드로 이렇게 prisma.users.create를 사용할 수 있음
+
+이런게 자동적으로 생성될건데 Prisma에게 User라는 model이 있다는 것을 알려줬기 때문임
+
+그리고 보다시피 자바스크립트 함수랑 객체를 이용해서 user를 생성할 수 있음
+
+여기에서 타입스크립트를 통한 보호도 받을 수 있음
+
+Prisma는 데이터베이스와 상호작용 할 수 있게 해줄 뿐 아니라 client라는 것도 만들어 주는데, client는 자동완성을 지원하기 때문에 아주 좋음
+
+예를 들어서 이렇게 Prisma Schema에 User model이 있으면 이렇게 훌륭한 자동완성 기능을 사용할 수 있음
+
+왜냐하면 Prisma가 User에 posts가 있다는 것도 알고, posts에는 title이 있다는 것도 알기 때문임
+
+그리고 그 데이터를 가지고 우리가 할 수 있는 모든 작업들을 자동완성 해줌
+
+이것이 Prisma를 사용하는 이유임
+
+거기에 Prisma Studio라는게 있어서 더 좋음
+
+Prisma Studio는 아주 휼륭한 Visual Database Browser인데 데이터베이스를 위한 관리자 패널(Admin Panel) 같은 것임
+
+너무 근사함
+
+지금까지 Prisma를 짧게 설명해봤고 사용해본 적 없다면 마음에 듦
+
+말했다시피 이것은 번역기 같은 역할을 하고 데이터베이스에 연결이 됨
+
+여기를 보면 PostgreSQL, MySQL, SQL Server, SQLite, MongoDB에 사용할 수 있음
+
+MongoDB에도 사용할 수 있는게 엄청남
+
+예전에는 안 됐었는데 이제는 지원하는 거 같음
+
+우리는 MySQL을 사용할건데 PlanetScale이 MySQL과 호환되는 데이터베이스임
+
+그래서 MySQL을 사용할건데 개발자로서 해야 할 일이 바뀌지는 않음
+
+Prisma를 사용하면 그래서 좋음
+
+Prisma를 사용해서 데이터베이스에 연결하면 큰 차이가 없음
+
+지금까지 Prisma에 대해 알아 봤음
+
+정말 훌륭한 툴이고 어서 시작하고 싶어서 두근두근함
+
+다음 영상에서는 기본적인 Prisma project를 만들고, prisma client를 생성해서 이것이 얼마나 멋있는지 봄
