@@ -7387,3 +7387,151 @@ input이나 textarea나 button 같은 component들을 찾아볼 수 있음
 백엔드를 만들기 시작함
 
 그리고 말했다시피 만약 지루했거나 tailwind CSS에 조금 짜증이 났어도 괜찮음
+
+## 6.0 Before We Start
+
+이번 섹션에서는 Prisma PlanetScale에 대해 공부할거고 이 어플리케이션에 적용할 serverless back-end 코드를 어디에 작성할지도 알아봄
+
+Prisma PlanetScale에 대해서는 다음 영상부터 공부할거고, 이번 영상에서는 UI 부분의 최신 버전을 공유해주려고 함
+
+지난 섹션을 공부했다면 이 UI가 아주 익숙함
+
+Tailwind를 엄청 연습하면서 우리가 같이 만들어 본 UI임
+
+지난 섹션을 공부하지 않았다면 아마 이 코드를 쓰고 싶음
+
+같은 UI에서 진행하는게 좋을테니까 영상 위의 링크를 클릭해서 코드를 다운받도록 함
+
+그리고 그 코드로 pages, libs, components 폴더를 변경하면 됨
+
+components 폴더랑 libs 폴더는 새로 만들어야 할 수도 있음
+
+pages 폴더는 이렇게 교체하고 components랑 libs는 새로 만들어서 이렇게 파일을 넣어줌
+
+이렇게 하면 같은 UI를 쓸 수 있음
+
+혹시 지난 섹션을 봤다면 무엇을 했는지 궁금함
+
+코드가 엉망이라 정리를 좀 해야겠다고 말했었음
+
+지금부터 알려줌
+
+코드를 살펴보면서 두번 이상 반복된 컴포넌트를 확인하고, 두번 이상 반복된 컴포넌트는 components 폴더 내에 넣어줬음
+
+button 컴포넌트도 만들었음
+
+이것이 button임
+
+button 중에서도 big button임
+
+이거 말고 다른 button도 있음
+
+이것은 small button임
+
+둘이 똑같은 종류임
+
+이것이 button 컴포넌트고 floating-button도 있음
+
+floating-button은 여러 화면에서 사용함
+
+세개 있음
+
+지난 섹션에서 만들어 봤던 input 컴포넌트임
+
+input 컴포넌트는 세 종류를 갖고 있는데 text는 이런 이메일 주소 같은 것임
+
+phone은 이렇게 앞에 indicator가 달려 있고 전화번호를 숫자로 적을 수 있는 종류임
+
+마지막으로 price는 여기서 사용됨
+
+이것이 price input임
+
+앞에 이렇게 표시가 돼 있음
+
+뒤에는 통화(currency)가 적혀 있음
+
+이것이 input 컴포넌트임
+
+prop을 보면 아주 쉽게 이해할 수 있음
+
+label은 바로 이것임
+
+name은 input이랑 label에 설정하는 name 속성임
+
+kind는 이미 설명했음
+
+input의 세가지 옵션임
+
+그리고 여기 이것은 input에 원하는 prop을 전달하고 싶을때 사용함
+
+input에 password, number, email 같은 타입을 명시해야 할 수도 있고 required일 수도 아닐 수도 있음
+
+그렇게 여러 종류의 prop을 보내야 할 수도 있으니까 여기에 이것을 써서 원하는 prop을 보낼 수 있도록 해 놓음
+
+여기서 label, name, kind 외에 다른 prop들을 싹 포착해서 input에 전부 넣어줌
+
+이것을 이용하면 이 컴포넌트를 사용할 때 원하는 prop을 바로 input에 넣어줄 수 있음
+
+required, max-length나 password 같은 input의 type 등 다 보낼 수 있음
+
+이것이 input 컴포넌트고 이것은 item 컴포넌트임
+
+itemprops가 있고 item은 세로로 늘어서 있는 이것임
+
+이것이 item임
+
+iPhone 14라고 써 있는 이 props를 읽어보면 꽤 직관적으로 되어 있음
+
+title은 이거고 id는 링크를 걸 수도 있음
+
+보다시피 따로 설명할 필요없겠지
+
+layout 컴포넌트는 전에 같이 만들어봤음
+
+사용자가 어디 있는지를 확인하기 위해서 router를 추가했고 사용자의 위치에 따라서 layout의 링크에 색을 입혀줬음
+
+이렇게 클릭하면 오렌지 색으로 변함
+
+이것 때문에 router를 추가함
+
+그리고 message 컴포넌트가 있는데 이것은 우리가 만든 chat message에 쓰임
+
+이것을 message 컴포넌트로 만들어 줬음
+
+이 컴포넌트에는 reversed라고 하는 prop이 하나 있는데 이것을 설정하면 message 컴포넌트를 뒤집게 됨
+
+전송하는 message에는 reverse를 적용함
+
+받는 message에는 reversed가 적용되지 않는 거고 보내는 message에는 reversed를 적용함
+
+프로필 사진 부분이랑 말풍선(bubble)의 순서를 뒤집음
+
+그리고 textarea 컴포넌트가 있는데 이것은 그냥 textarea임
+
+바로 여기서 사용되고 있음
+
+이것이 textarea임
+
+보다시피 굉장히 간단함
+
+label을 보내면 받을 수 있고 여기에는 textarea 태그가 있음
+
+textarea도 마찬가지로 모든 prop을 받을 수 있도록 해줬고 여기 interface에도 적어놨음
+
+원하는 prop을 무엇이든 보낼 수 있음
+
+아까도 말했다시피 textarea가 required일 수도 있고 placeholder를 설정하고 싶을 수도 있고 그런 것을 처리하기 위해서 이렇게 해줌
+
+모든 prop을 여기에 적지 않아도 되도록 쉬운 방법으로 만들어둠
+
+코드가 어떻게 정리됐는지 궁금해 할 사람이 많을 테니까 지난 섹션을 공부한 사람들을 위해 알려줌
+
+그래도 혹시 코드를 원한다면 Github에 올라가 있으니 그것을 쓰면 됨
+
+pages랑 components 폴더를 바꿔주기만 하면 됨
+
+이렇게 해서 지난 섹션을 잠시 정리해봤고 공식적으로 UI는 끝임
+
+이제 진짜 데이터를 가지고 이 앱을 만들어봄
+
+다음 영상에서는 Prisma에 대해 공부함
