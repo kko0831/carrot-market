@@ -7879,3 +7879,185 @@ createdAt이랑 updatedAt이 무엇인지도 한눈에 알 수 있고 보다시�
 데이터베이스가 없어서 아직 Prisma의 진정한 힘은 보지 못했지만 그것은 다음 영상에서 함
 
 다음 영상에서는 PlanetScale을 공부할건데 정말 깜짝 놀람
+
+## 6.3 What is PlanetScale
+
+이번 영상에서는 PlanetScale에 대해 알려줌
+
+PlanetScale은 MySQL과 호환되는 serverless 데이터베이스 플랫폼임
+
+그게 대체 무슨 뜻일까
+
+데이터베이스 플랫폼이라는 것은 데이터베이스를 제공해준다는 의미임
+
+serverless는 정말로 서버가 없다는게 아니라, 서버를 우리가 유지할 필요가 없다는 뜻임
+
+serverless는 서버가 없다는 뜻이 아님
+
+그것은 말도 안 됨
+
+serverless는 우리가 서버를 관리하고 유지보수할 필요가 없다는 뜻임
+
+PlanetScale은 데이터베이스를 제공해주는 데이터베이스 플랫폼임
+
+그렇지만 이것은 사람들이 아마존에서 데이터베이스를 만들 때 사용하는 AWS의 RDS(관계형 데이터베이스 서비스) 같은 것은 아님
+
+왜냐하면 거기서는 서버를 만들어야 하고, 적당한 크기를 설정하는 등 모든 것을 직접 해야함
+
+예를 들어 백만 명이 데이터베이스에 연결되면 직접 scaling(확장)시켜 줘야함
+
+좋은 소식이 아님
+
+이런 serverless 플랫폼을 사용하면 그런 작업을 대신 해줌
+
+안정성을 신뢰할 수 있는거고 굉장히 좋은 일임
+
+그리고 여기를 보면 MySQL serverless database가 아님
+
+MySQL-compatible serverless database임
+
+거기에도 의미가 있음
+
+MySQL을 쓰는게 아니라, MySQL이랑 호환되는 무엇인가를 사용해서 그럼
+
+그것 덕분에 provider를 mysql로 설정할 수 있음
+
+serverless고 MySQL이랑 약간은 다른 것을 사용하기 때문에 schema.prisma에서 약간 바꿔줘야 할게 있음
+
+코드 두 줄만 바꾸면 잘 됨
+
+그 코드가 무엇인지는 나중에 설명해줌
+
+지금은 PlanetScale을 더 알아봄
+
+여기를 보면 All power, no pain임
+
+vacuuming, rebalancing, scaling을 할 필요가 없음
+
+query planning도 없고 downtime도 없음
+
+downtime이 없다는 것은 database가 꺼지지 않는다는 말임
+
+많은 사람들에게 좋은 기능임
+
+그리고 여기가 이번 영상에서 가장 중요한 부분인데 MySQL serverless platform이 아닌 이유는 Vitess가 있기 때문임
+
+Vitess는 가장 scaling 기능이 뛰어난 오픈소스 데이터베이스임
+
+Vitess는 유튜브를 scale하기 위해 구글이 만듦
+
+Vitess는 대기업들이 규모에 맞게 MySQL을 scale하기 위해 쓰는 방법임
+
+왜냐하면 scaling이 가장 까다로운 부분임
+
+SQL 데이터베이스를 하나만 갖고 있어도 많은 유저들을 위해서 엄청 많은 일을 할 수 있음
+
+서버가 하나만 있어도 정말 많은 일을 할 수 있음
+
+하지만 매초 수백만 개의 쿼리를 처리해야 하고, 수십만 개의 연결이 들어오고 수만 개의 노드가 필요하다면 거기서부터는 정말 어려운 일이 시작됨
+
+데이터베이스에 horizontal scaling도 해야하고 sharding도 해야하고, 데이터베이스가 맛이 가지 않도록 유지하고 조정해야 하는 등 많은 노력이 필요함
+
+Vitess는 이런 일을 하기 위해 만들어졌음
+
+보다시피 정말 많은 유명한 대기업들이 사용하고 있음
+
+유튜브, 슬랙, 에어비앤비, 트위터 등등 이런 곳에 Vitess가 사용됨
+
+그리고 보다시피 이것은 오픈소스 기술임
+
+많은 사람들이 사용함
+
+웹사이트에 가 보면 사이트가 썩 훌륭하지는 않지만 완전히 오픈소스임
+
+이런 일을 하는 것임
+
+MySQL을 horizontal scaling하기 위한 database clustering system임
+
+무슨 뜻이냐면 MySQL을 좀 더 쉽게 scaling 할 수 있도록 하는 시스템임
+
+보다시피 여기 Horizontal Scale이라고 적혀 있고 sharding이 가능함
+
+High Availability는 복사본에 failure가 일어나도 괜찮도록 데이터베이스의 복사본을 저장해둔다는 의미임
+
+어쩌면 데이터가 폭발해서 디스크가 날아가버리는 일이 발생할 수 있는데 그런 문제도 해결해야함
+
+High availability라는 것은 디스크가 하나 죽더라도 괜찮도록 데이터를 여러 장소에 복사한다는 의미임
+
+여기를 보면 MySQL 호환에 관한 것도 있음
+
+코드를 많이 바꾸지 않아도 됨
+
+그리고 이것은 Schema Migration이라는 정말 훌륭한 기술임
+
+PlanetScale은 schema migration을 정말 훌륭하게 구현했음
+
+더 살펴보기 전에 가격 정책을 한번 봄
+
+무료 플랜은 한 달에 10GB의 저장 공간, 1억 번의 읽기, 1천만 번의 쓰기, 3개의 branch를 제공함
+
+이거에 대해서는 있다가 얘기함
+
+동시 접속은 1000개까지 가능한데 그렇게 자주 일어나는 일은 아닐 거고 매일 자동 백업도 됨
+
+29달러를 내면 AutoScaling을 지원함
+
+사람들이 많이 방문하면 자동으로 Scaling을 해서 더 많은 트래픽을 받을 수 있도록 함
+
+계속해서 살펴봄
+
+PlanetScale에서 가장 좋아하는 것은 개발자 경험(Developer Experience)임
+
+PlanetScale은 아주 훌륭한 CLI가 있는데 마치 깃(github)을 사용하는 것처럼 쓸 수 있음
+
+정말 훌륭한 점임
+
+마치 깃을 쓰는 것처럼 데이터베이스를 다룰 수 있음
+
+예를 들어서 데이터베이스에 user라는 새 model을 추가하려 한다고 해봄
+
+모두가 사용하는 메인 데이터베이스를 직접 수정하는 대신 데이터베이스에 branch를 만들 수 있음
+
+그 branch에서 schema도 바꾸고 새 model도 만들고 fields도 수정함
+
+원하는 수정을 다 한 다음에 잘 된다는 생각이 들면 schema를 옮기는건데 그것을 알아서 해줌
+
+이렇게 합칠 수 있음
+
+여기를 보면 branch를 이용해서 schema 변경을 100% 자동으로 배포한다고 함
+
+정말 좋은 기능임
+
+깃을 쓰는 거랑 똑같음
+
+development라는 branch를 만들고 준비가 되면 main branch에 합침
+
+그리고 downtime 없이 배포하거나 migration함
+
+사용자가 방해 받지 않도록 처리할 수 있음
+
+그리고 말했다시피 아주 훌륭한 CLI도 있음
+
+이렇게 pscale branch를 이용해서 branch를 만들 수 있고 여기서는 지웠음
+
+pscale branch delete, pscale branch create가 있고 pscale branch list를 이용하면 branch 목록을 불러올 수 있음
+
+정말 굉장함
+
+Prisma랑 같이 쓰면 얼마나 훌륭한지를 알게 됨
+
+지금까지 PlanetScale에 대한 설명이었고 마음에 들었으면 좋겠음
+
+PlanetScale을 이용하는게 얼마나 쉽고 재밌는지 와닿았으면 좋겠음
+
+데이터베이스를 직접 배포하고 유지보수하는 것은 고통 그 자체임
+
+그리고 말했다시피 DX(개발자 경험, Developer Experience)도 끝내줌
+
+그것이 어떤 의미인지 곧 알게 됨
+
+그러면 바로 계정을 만들어봄(https://planetscale.com/)
+
+Sign In을 클릭해서 계정을 만듦
+
+계정을 만들거나 깃허브로 로그인하면 됨
