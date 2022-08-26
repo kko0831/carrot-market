@@ -8061,3 +8061,273 @@ PlanetScale을 이용하는게 얼마나 쉽고 재밌는지 와닿았으면 좋
 Sign In을 클릭해서 계정을 만듦
 
 계정을 만들거나 깃허브로 로그인하면 됨
+
+## 6.4 Connecting to PlanetScale
+
+계정을 만들고 로그인을 했으면 이런 화면이 보일 텐데 이것은 일종의 관리자 패널(Admin Panel) 같은 것임
+
+하지만 관리자 패널을 깊게 살펴 보진 않을건데 PlanetScale의 최대 장점 중 하나가 CLI라고 생각함
+
+제공하는 Command Line Interface가 아주 훌륭함
+
+그러니 그것을 다운받아서 설치함
+
+맥 유저라면 brew install planetscale/tap/pscale을 실행한 다음 mysql-client도 설치해주면 됨
+
+리눅스 유저는 여기서 release를 다운로드 받고 이 명령어를 각각 실행시켜주면 됨
+
+.deb를 받았다면 dpkg, .rpm을 받았다면 rpm 명령어를 실행시켜주면 됨
+
+윈도우 유저라면 먼저 scoop을 다운받는 것을 추천함(https://scoop.sh/)
+
+PowerShell에서 Set-ExecutionPolicy RemoteSigned -Scope CurrentUser 입력함
+
+PowerShell에서 irm get.scoop.sh | iex 입력함
+
+scoop은 콘솔을 통해서 쉽게 다운로드 받을 수 있게 해주는 도구임
+
+먼저 scoop.sh로 이동해서 이 명령어를 실행해줌
+
+PowerShell에서 Set-ExecutionPolicy RemoteSigned -Scope CurrentUser 입력함
+
+PowerShell에서 irm get.scoop.sh | iex 입력함
+
+그러면 이런 식으로 설치할 수 있음
+
+우리는 여기 나와 있는대로 scoop bucket으로 planetscale의 bucket을 add 해주고 scoop install로 pscale mysql을 설치해주면 끝임(https://github.com/planetscale/cli)
+
+터미널에 scoop bucket add pscale https://github.com/planetscale/scoop-bucket.git 입력
+
+터미널에 scoop install pscale mysql 입력
+
+scoop: command not found가 나오면 VS Code를 재실행 해봄
+
+이렇게 설치가 끝났다면 VS Code에서 pscale을 입력해봄
+
+이런 화면이 보인다면 잘 설치가 됐음
+
+혹시 이런 화면이 보이지 않는다면, pscale이 잘 설치가 안 되면 영상 아래의 버튼을 클릭해줌
+
+이슈 버튼을 눌러서 스크린샷과 함께 어떤 문제가 있는지 보여주면 최대한 도와주도록 함
+
+혹은 친절한 노마드코더 식구들이 최대한 도와줌
+
+그러니 여기서 잠시 영상을 멈추고 pscale CLI를 설치하도록 함
+
+콘솔에서 pscale을 실행할 수 있게 되면 다시 영상을 재생시켜줌
+
+설치가 끝났음
+
+지금부터는 pscale을 살펴보면서 어떤 명령어들이 있는지 확인해봄
+
+예를 들면 로그인을 위한 auth, backup, branch, completion과 데이터베이스에 연결하기 위한 connect와 데이터베이스를 다루기 위한 database와 그 하위에 다시 create, read, delete 등이 있음
+
+region을 보기 위한 명령어임
+
+어떤 region들이 있는지 확인해볼까
+
+pscale region 그리고 추가 명령어는 list임
+
+터미널에 pscale region 입력함
+
+pscale region list라고 하면 됨
+
+터미널에 pscale region list 입력함
+
+보다시피 아직 로그인이 안 됐음
+
+로그인을 먼저 함
+
+터미널에 pscale auth login 입력함
+
+이렇게 하면 브라우저가 열림
+
+여기에 뜬 숫자가 터미널에 있는 숫자랑 같은지 확인만 해주면 됨
+
+확인을 눌러줌
+
+전부 준비 됐음
+
+보다시피 여기 확인 대기 중(Waiting for confirmation)이라는 표시가 로그인 완료(Successfully logged in)로 바뀜
+
+그럼 로그인이 된거고 이제 다시 pscale region list 명령어를 실행할 수 있음
+
+터미널에 pscale region list 입력
+
+그래서 region을 확인 해보면 보다시피 아시아가 있음
+
+한국은 없지만 도쿄나 싱가폴도 충분히 가까우니까 괜찮음
+
+유럽에는 더블린이 있음
+
+나쁘지 않음
+
+그럼 이 region에 데이터베이스를 만들어봄
+
+바로 여기에 데이터베이스를 만듦
+
+그러니 이 이름을 기억함
+
+ap-northeast에 데이터베이스를 만듦
+
+이제 pscale database 명령어를 확인해봄
+
+터미널에 pscale database 입력
+
+사용할 수 있는 옵션을 보면 create가 있음
+
+터미널에 pscale database create 입력함
+
+그러면 이런 옵션들이 보임
+
+Flags랑 이렇게 사용 방법이 나와 있음
+
+pscale database create 다음에 데이터베이스의 이름을 적어줘야 함
+
+그리고 이렇게 region을 명명해줄 수 있음
+
+터미널에 pscale database create carrot-market --region ap-northeast 입력
+
+이렇게 하면 데이터베이스가 만들어짐
+
+이제 관리자 패널로 돌아가 보면 보다시피 이미 데이터베이스가 만들어져 있음
+
+물론 여기 이 New database를 클릭해도 됐음
+
+사실 그냥 이거만 눌러도 데이터베이스를 만들 수 있음
+
+이름을 넣어주고 region을 정해주면 됨
+
+하지만 CLI 사용에 익숙해지는 것을 추천함
+
+이 버튼을 누르는 것보다 더 생산성이 높아짐
+
+CLI는 모든 것에 사용됨
+
+이제 우리의 데이터베이스가 생겼음
+
+굉장히 쉽지
+
+엄청 간단함
+
+이제 해야 하는 일은 URL을 구하는 것임
+
+이 데이터베이스를 Prisma에 연결해야함
+
+여기를 보면 데이터베이스에 연결하기 위해서 Prisma는 환경변수로 DATABASE_URL을 찾고 있음
+
+그런데 지금 .env 파일의 URL을 보면 이렇게 돼 있음
+
+좀 별로임
+
+이것은 진짜 데이터베이스가 아님
+
+우리는 postgresql 데이터베이스를 쓰지 않음
+
+그러니 이것은 지움
+
+지금부터 데이터베이스의 세계에서 경험한 것 중 가장 엄청난 거 하나를 보여줌
+
+보통 데이터베이스 플랫폼에서는 데이터베이스를 하나 만들면 이렇게 암호를 생성함
+
+엄청 많은 회사에서 Heroku나 AWS 같이 이런 방식을 선택함
+
+그런 회사는 암호를 만들어 줌
+
+그리고 그 암호를 관리해야 함
+
+암호를 환경 파일에 집어 넣어야 함
+
+그런데 그러면 암호가 장치에 저장됨
+
+누구든 컴퓨터를 열어서 암호를 확인할 수 있음
+
+그리고 혹시나 실수로 이 파일을 깃허브에 올리거나 하면 그냥 올라가버림
+
+URL이 업로드 됨
+
+그런 일은 좋지 않음
+
+그래서 사람들이 보통 하는 방식이 뭐냐하면, 컴퓨터로 작업할 때 진짜 데이터베이스는 건드리지 않음
+
+데이터베이스를 두 개 사용함
+
+컴퓨터에서 서버를 작동할 수 있도록 가짜 데이터베이스를 사용함
+
+그리고 실제 배포할 때 AWS나 Heroku를 이용함
+
+이런 일은 강의에서도 여러 번 있었음
+
+postgres를 다운로드 받고, postgres 서버를 작동시키고, postgres 데이터베이스도 만듦
+
+postgres도 작동시킬 수 있어야 하고 실제 데이터베이스 서버를 만드는 식으로 강의했었음
+
+그러는 대신에 PlanetScale에서는 컴퓨터랑 PlanetScale 사이에 일종의 보안 tunnel을 이용할 수 있음
+
+암호나 그런 것을 알 필요도 없어짐
+
+아주 좋은 기능임
+
+다시 말하지만 MySQL을 다운 받고 설치하고 실행할 필요가 없음
+
+그리고 두 개의 데이터베이스를 만들어서 하나는 컴퓨터 용으로 다른 하나는 PlanetScale용으로 관리하는 방식을 쓸 필요도 없음
+
+그리고 .env 파일에 암호를 저장해야 할 필요도 없음
+
+굉장히 훌륭한 점임
+
+그럼 어떻게 해야 암호 없이 컴퓨터와 PlanetScale 사이에 보안 연결을 만들 수 있을까
+
+그 답은 CLI에 있음
+
+이렇게 pscale이라고 입력해 보면 보다시피 database와 보안 연결을 만들어 주는 connect 명령어가 있음
+
+한번 해 봄
+
+터미널에 pscale connect carrot-market 입력
+
+그리고 실행하면 연결이 됐음
+
+엄청 간단하지
+
+데이터베이스에 연결을 해본 적이 있다면 그게 얼마나 까다로운지 앎
+
+host도 복사해야 하고 port도 복사해야 하고 username, password 등 모든 것을 다 복사해야 함
+
+그런데 이것을 봄
+
+이렇게 pscale connect만 치면 이런 URL이 나옴
+
+이 URL은 PlanetScale 서버랑 연결됨
+
+진짜 엄청나지
+
+이제 우리가 해야 할 일은 이 URL을 복사해서 이 연결은 끊지 말고 이 콘솔은 닫으면 안 됨
+
+최소화만 해 놓고 새 콘솔을 연 다음 이 콘솔을 통해서 PlanetScale이랑 연결되어 있는 거니까 닫으면 안 됨
+
+닫지 말고 연결을 끊지 마
+
+이 URL을 복사해서 여기에 넣음
+
+.env 파일에 DATABASE_URL="mysql://127.0.0.1:3306/carrot-market" 입력 
+
+이렇게만 해주면 끝임
+
+이렇게 하면 PlanetScale이랑 연결됨
+
+이런 개발자 경험이 얼마나 놀라운지 알았으면 좋겠음
+
+콘솔로 데이터베이스를 만들었고 암호도 모른 채로 연결에 성공했음
+
+컴퓨터랑 PlanetScale 사이에 secure tunnel만 만들어줬음
+
+암호나 다른 어떤 것도 복사할 필요가 없었음
+
+얼마나 편리한지 몰라
+
+중요한 것은 이것이 끝이 아님
+
+이제부터는 Prisma를 이용해서 PlanetScale에 변경점들을 push하는 방법을 알아볼건데 정말 생각도 하기 힘든 방법임
+
+그 전에 아주 잠깐 schema.prisma 파일에서 바꿔줘야 할 부분이 있는데 그것은 다음 영상에서 해봄
