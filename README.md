@@ -10555,3 +10555,223 @@ watch는 거의 모든 사람들에게 필요한 기능임
 다음 섹션에서 봄
 
 앱의 로그인 기능을 시작해봄
+
+## 8.0 Enter Form
+
+이 영상에서는 Enter Screen의 form을 만들어봄
+
+이 input들을 빠르게 만들면서 시작해봄
+
+첫번째로 useForm hook을 써줌
+
+그리고 interface를 만들건데 EnterForm이라고 해줌
+
+여기에 사용자가 줄 정보인 email이나 phone을 써줌
+
+type으로 string도 써주고, useForm으로 와서 type으로 EnterForm을 써줌
+
+여기서 register를 받을거고 아직까지 새로운 것은 없음
+
+우리가 다 했던 것임
+
+그런데 문제가 하나 있음
+
+이 form은 UI 섹션에서 만들었던 Input 컴포넌트를 그대로 씀
+
+그래서 이 Input 컴포넌트는 그냥 input과는 다름
+
+label, div랑 input도 여러개 있음
+
+그래서 만약 register를 이렇게 써준다면 작동하지 않음
+
+왜냐하면 이것이 보내질 곳이 없음
+
+register를 쓰면 input에 필요한 각종 EventListener 등등이 생기게 되는거 기억하지
+
+이렇게 하는 대신에 다르게 해봄
+
+왜냐하면 이것은 일반 input에만 써야함
+
+그래서 이 register의 내용을 다른 prop에 모두 넣어줌
+
+똑같은 단어로 register라고 해줌
+
+그리고 이것을 복사해서 여기에 붙여넣음
+
+얘는 phone임
+
+이 register 함수가 실행되면 그 값은 register prop으로 들어가게 됨
+
+Input으로 오는 어떤 prop이든 받게 만들어놨으니까 여기 rest에서 찾을 수 있음
+
+rest는 앞의 세 prop을 제외하고 Input으로 온 나머지 prop들을 포함하고 있음
+
+그리고 rest는 여기 집어넣었음
+
+이제 문제없이 잘 작동함
+
+새로고침 해주고 이제 콘솔에 아무 에러도 없음
+
+모든게 정상작동함
+
+보다시피 우리는 지금 다른 방식으로 하고 있는데 register를 Input 컴포넌트에 보내고, 그것을 컴포넌트 내부의 input에서 사용하고 있음
+
+이제 register를 expand({...}) 시켜줌
+
+register를 사용하면 EventListener라든지 ref 등등 많은 것을 줌
+
+그것들을 Input 안에서 expand 시켜줘야함
+
+여기에 register prop을 expand 시킴
+
+여기 register 추가부터 해주고, 여기에 {...register}라고 써줌
+
+여기서 함수를 호출할 필요는 없음
+
+이미 함수는 앞에서 실행되었기 때문임
+
+이제 이것을 다른 input에도 모두 추가해주면 끝임
+
+이제 여기서 watch를 받아옴
+
+그리고 watch()를 console.log해서 form이 정상작동하는지 봄
+
+새로고침 해줌
+
+email을 입력해주면 잘 작동함
+
+phone에서도 입력해주면 보다시피 잘 작동함
+
+하지만 문제가 있음
+
+지금 phone에서 submit 했는데, 이것이 잘 작동할지 모르겠음
+
+email이 state에 그대로 남아있는거 보이지
+
+여기 email이 있음
+
+보다시피 method를 바꿔도 email이 그대로임
+
+즉 form을 clear 시켜줘야함
+
+그게 reset이었음
+
+reset을 써야됨
+
+이제 누구인가 method를 바꾸면 reset도 해줌
+
+이러면 됐음
+
+한번 해봄
+
+email을 넣어주고 phone도 입력해주면 보다시피 값 하나만 나옴
+
+정말 잘 되고 있음
+
+이제 handleSubmit을 함
+
+지금은 submit하면 새로고침이 됨
+
+그러면 GET request를 보낼거고 이것은 기본 설정임
+
+이렇게 할 수는 없음
+
+그래서 handleSubmit을 받아옴
+
+여기에 onValid라는 함수를 만들고 type이 EnterForm인 data를 받음
+
+이러면 됐음
+
+다시 form으로 가서 onSubmit에 handleSubmit을 써줌
+
+이것은 useForm에서 옴
+
+그리고 안에 onValid를 써줌
+
+onValid는 data를 console.log 함
+
+작동하는지 봄
+
+새로고침 해주고 inspect해서 console로 감
+
+email을 입력해주면 잘 작동함
+
+phone을 입력해줘도 잘 작동함
+
+여기서 한 작업들은 전에 했던 것들의 반복이었음
+
+useForm을 쓰고 register를 쓰고 handleSubmit과 reset도 다시 써봤음
+
+watch도 쓰기는 했는데 이제 필요없음
+
+그리고 Input을 조금 리팩터링 했음
+
+왜냐하면 이 Input은 일반 html의 input이 아니기 때문임
+
+이것은 Input component임
+
+지금 이 prop을 추가하는데 문제가 생기지 않은 것은 여기 작성했던 이 [key]덕분임
+
+이것이 아무 prop이나 보낼 수 있게 해줌
+
+그리고 모든 prop은 여기서 받아짐
+
+만약에 이렇게 하기 싫으면 이렇게 안해도 될 것 같음
+
+지우면 register가 untyped가 될텐데 register에 실제 type을 지정하면 될 것 같음
+
+register()의 return type을 보면 UseFormRegisterReturn임
+
+이것을 넣어줌
+
+react-hook-form에서 import하고, 이것은 type이니까 import type이라 쓰는 것도 잊지마
+
+이제 여기 type prop을 살펴봄
+
+여기서 type: string이라고 해줌
+
+그러면 됐음
+
+밑에도 type이라고 써줌
+
+여기도 추가해줌
+
+여기도 똑같이 해줌
+
+엄청 복잡한 수정은 아님
+
+영상을 끄고 이것을 다 수정하고 옴
+
+그러면 이제 form은 끝났음
+
+무엇을 하고 있는지만 잘 이해한다면 엄청 간단함
+
+그리고 멋진 것은 여기서 validation을 할 수 있음
+
+뒤에 그냥 required: true만 써주면 됨
+
+밑에도 똑같이 해줌
+
+이제 다 됐고, 영상을 종료하고 몇몇 부분을 수정함
+
+일단 required를 boolean으로 해야함
+
+그냥 지금 해야겠음
+
+이러면 됐음
+
+required를 이렇게 쓰는 것을 선호함
+
+이제 끝났음
+
+이제 우리는 엄청난 Input component를 가지고 있음
+
+이것이 이번 영상이었고 Enter Screen의 인트로였음
+
+다음 영상에서는 이 data를 백엔드로 보내봄
+
+백엔드에서는 Prisma를 써서 계정을 만들거나, 계정을 가지고 있다면 찾을 수 있게 해봄
+
+모든 것을 해봄
+
+한번 만들어봄
