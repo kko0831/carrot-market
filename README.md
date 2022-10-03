@@ -10775,3 +10775,177 @@ required를 이렇게 쓰는 것을 선호함
 모든 것을 해봄
 
 한번 만들어봄
+
+## 8.1 Form Submission
+
+이제 이 form의 내용을 백엔드로 보낼 시간임
+
+먼저 submit을 해야함
+
+잘 작동하는지 보고 코드를 정리할거고 utility function도 몇개 만들어봄
+
+api를 만들때 우리를 정말 편하게 해줌
+
+그럼 시작해봄
+
+먼저 이 onValid가 호출되면 나중에 만들 api URL을 fetch함
+
+method는 POST가 될거고 body로 여기 있는 data를 보냄
+
+여기서는 success인지 error 여부를 따지지 않음
+
+그러려면 then을 써야 겠지만 이것은 나중에 함
+
+지금은 그냥 지저분한 코드를 쓸거고, 나중에 보여줄 어떤 함수를 이용해서 코드를 정리해보도록 함
+
+일단은 먼저 api URL을 만듦
+
+이 링크는 지금은 존재하지 않음
+
+그리고 api URL을 만들려면 pages/api 폴더에 파일을 추가해야함
+
+여기 users 폴더는 이미 있고 client-test 파일은 users 폴더 안으로 옮겨줌
+
+이렇게하면 /api/users는 만들어질거고 이 파일 이름을 enter로 바꿔주면 됨
+
+그리고 이 enter 파일을 둘러봄
+
+먼저 내용을 싹 지워줌
+
+그리고 일단 임시로 해두는건데 어떤 요청이 오든 status 200을 보낼거고 그 다음 연결을 끝내도록 함
+
+이러면 됐음
+
+아직은 Prisma를 사용하지 않을거고, 지금은 req.body를 console.log 해봄
+
+form의 정보를 정상적으로 받고 있는지 확인함
+
+한번 해봄
+
+브라우저에서 email을 입력해주고 제출함
+
+inspect의 console에 오류가 없어야 됨
+
+새로고침하고 다시 해야 될 거 같음
+
+Network 탭으로 간 뒤에 submit하면 무슨 일이 일어날까
+
+여기에 Network 탭을 보면 enter request가 들어왔음
+
+클릭해보면 보다시피 /api/users/enter로 POST 요청을 보냈음
+
+정말 잘 작동함
+
+그리고 백엔드로 와서 콘솔을 열어보면 우리가 쓴 이메일임
+
+보다시피 모든게 완벽하게 작동함
+
+이번에는 req.body.email로 바꾸고 다시 form을 submit 해봄
+
+버튼을 눌러주면 보다시피 작동하지 않음
+
+이것은 req.body는 req 내용의 인코딩을 기준으로 parse되기 때문인데 중요함
+
+이것은 많은 Next 개발자들이 놓치는 것 중에 하나인데 무슨 일인지 알아내려고 많이 노력했음
+
+document를 읽어본다면 req.body가 req의 인코딩을 기준으로 인코딩된다는 것을 알 수 있음
+
+보다시피 여기 email이 있음
+
+하지만 req.body.email은 작동하지 않음
+
+req.body를 한다면 email이 있지만 req.body.email을 하면 작동하지 않음
+
+이것을 해결하려면 프론트엔드에서 headers를 설정해줘야함
+
+이제 다시 한번 해봄
+
+로그인 버튼을 누르면 이제 여기서 문제없이 email을 받을 수 있음
+
+모든게 잘 작동함
+
+이것이 첫번째 핵심이었음
+
+이제 그 다음으로 backend에서 할 일은 보다시피 모든 request에 200의 status를 보내고 있고, 모든 req의 body를 확인하고 있음
+
+하지만 req의 method를 확인해야 하지 않을까
+
+만약 GET 요청이라면 정상이라고 보내면 안 됨
+
+잘못된 호출이라고 해야 됨
+
+enter는 GET이 아니라 POST로만 요청해야 됨
+
+직접 해봄
+
+여기로 와서 req.method가 POST가 아니면 bad request로 응답함
+
+bad request가 401이었나
+
+확실하지는 않음
+
+그 다음에 end()함
+
+이것은 찾아본 뒤에 다시 말해줌
+
+이 영상의 핵심은 우리가 정말 자주 다룰 것들을 보여줌
+
+예를 들어 api를 호출할때마다 headers를 설정해야 됨
+
+그것은 진짜 좋지 않음
+
+또 method도 설정해야 됨
+
+좋지 않음
+
+그리고 data도 stringify 해야함
+
+안 좋음
+
+만약 좀 더 낫게 만들고 싶다면 이렇게 loading이라는 state를 만들어봄
+
+loading 말고 submitting이라고 함
+
+만약 onValid면 setSubmitting(true)라고 해주고 fetch가 끝나면 then을 써서 다시 setSubmitting(false)라고 해줌
+
+이것을 UI로 좀 보여줄건데 여기 Button에서 submitting이면 Loading이라고 하고 아니면 원래 텍스트를 보여줌
+
+보다시피 정말 자주 다루게 될 것들이 있음
+
+먼저 POST로 fetch 해야하고 그 다음에 data를 stringify 해야 됨
+
+그리고 Content-Type도 설정해야되고 사용자한테 submitting인지도 보여줘야 됨
+
+또 백엔드에서는 method를 확인해야하고 원하는 method가 아니라면 오류도 보내야 됨
+
+이 작업들을 반복하게 됨
+
+일단 지금은 작동하는지 봄
+
+지금은 백엔드와 정상적으로 통신할 수 있는지만 봄
+
+지금은 headers를 설정하는 법을 배웠음
+
+하지만 다음 영상에서는 이 코드를 정리할거고 utility function을 써서 훨씬 편리하게 만듦
+
+나중에는 api로부터 data를 받아올거고 swr이라는 멋진 패키지를 사용할건데 데이터를 가져오고 캐싱을 하고 변형을 할 수 있음
+
+하지만 post하려면 자체적으로 함수를 구현해야 하는데 그것도 재미있음
+
+지금은 그냥 잘 작동하는지 봄
+
+여기를 클릭하면 loading이 엄청 빠르게 지나감
+
+submit하고 loading이 잘 나타나는 것을 확인했음
+
+이것이 이번 영상에서 할 일이었음
+
+이것은 못 생긴 코드지만 원론적임
+
+다음 영상에서 정리해봄
+
+frontend에서는 이 부분을 utility function을 만들어서 더 멋지게 api에 POST 하도록 만들어봄
+
+submitting 상태를 받을거고 backend에서도 몇개의 함수를 만들어봄
+
+if (req.method ~)를 매번 안 해도 되도록 함
