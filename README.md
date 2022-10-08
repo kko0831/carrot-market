@@ -10949,3 +10949,221 @@ frontend에서는 이 부분을 utility function을 만들어서 더 멋지게 a
 submitting 상태를 받을거고 backend에서도 몇개의 함수를 만들어봄
 
 if (req.method ~)를 매번 안 해도 되도록 함
+
+## 8.2 Clean Code part One
+
+이 영상에서는 코드를 정리할거고 우리가 사용할 수 있는 hook으로 만듦
+
+mutation을 하도록 할건데 api에 많은 POST를 해야하기 떄문임
+
+그럼 멋진 utility function을 만드는 것부터 시작해봄
+
+먼저 libs 폴더로 가서 안의 내용들을 폴더로 분류해줌
+
+백엔드랑 클라이언트에서 사용되는 것들을 서로 구분하고 싶음
+
+새 폴더를 만듦
+
+하나는 client, 다른 하나는 server라고 함
+
+그 다음에 client.ts는 server폴더에, utils.ts는 client폴더에 넣음
+
+그저 무슨 작업을 하는지 명확하게 하기 위해서임
+
+파일을 이동시키고 'Yes'를 선택하면 VSC가 자동으로 import 경로를 바꿔줌
+
+진짜 좋은 기능임
+
+여기도 바뀌었음
+
+이제 hook을 만들어봄
+
+client 폴더에서 useMutation.tsx라는 hook 파일을 만들어줌
+
+여기에는 hook을 만들건데 react component고 function과 state를 return함
+
+export default function이라고 써주고 이름은 useMutation이라고 함
+
+그리고 무엇인가를 return함
+
+아직은 return할게 없음
+
+이제 무엇을 할거냐면 hook을 어떻게 사용할건지 적어봄
+
+아직 hook을 구현하지는 않음
+
+먼저 어떻게 이 hook을 쓸지 작성해봄
+
+이 hook에서 얻을 수 있을 최고의 개발 경험이 무엇일지를 써봄
+
+이제 무엇을 할거냐면 hook으로부터 array를 받음
+
+useMutation을 쓰고 array의 첫번째 item은 우리가 호출할 수 있는 function이 됨
+
+그 function이 백엔드로 POST fetch를 함
+
+그래서 이것을 mutation이라고 부름
+
+data를 백엔드에 POST로 보내면 데이터베이스의 상태를 mutate 할 수 있음
+
+그래서 mutation이라고 부름
+
+useMutation hook에서 받을 array의 첫번째 item은 이 mutation을 작동시킬 function이 됨
+
+여기서는 enter라고 해봄
+
+그리고 enter를 호출하면 fetch로 POST함
+
+또 mutation에서 무슨 일이 일어나는지 알고 싶음
+
+로딩중이거나 에러를 받거나 POST의 결과 data를 받는 것을 보고 싶음
+
+그래서 여기다가 loading, data, error가 있는 object를 만들어줌
+
+나중에는 이 부분을 그냥 enter()로 바꿔줌
+
+그리고 여기서 data를 보내고 싶음
+
+data의 내용으로 phone이 있음
+
+그 값은 data.phone이 됨
+
+email일 수도 있음
+
+아니면 이렇게 해봄
+
+인수에 ...data를 집어넣음
+
+그냥 data라고 써줌
+
+이 data는 form에서 제출된 email이나 phone이 됨
+
+이것은 원하는 사용자 경험임
+
+또 원하는 개발자 경험이기도 함
+
+사용자 경험과 개발자 경험 모두를 만족시키게 이제 hook을 구현해봄
+
+보다시피 우리가 전에 했던 것보다 훨씬 나아보임
+
+다시 말하자면 여기서 했던 것은 fetch를 숨기고 state를 썼음
+
+모든 것은 여기 useMutation에 숨어있음
+
+우리는 이제 useMutation을 어떻게 쓰게 될지 알고 있음
+
+즉 코드를 어떻게 구현할지 알게 됐다는 것임
+
+그러면 무엇을 써야 할까
+
+그리고 잊지 않아야 하는데, useMutation은 어떤 url을 mutate할지를 알아야 함
+
+/api/users/enter라고 써줌
+
+이것이 hook을 쓸 방식임
+
+이제 실제 코드를 쓸 시간임
+
+여기 작성한게 현실이 됨
+
+말했다시피 useMutation의 argument는 url이 됨
+
+이것은 string임
+
+먼저 어떤 type으로 return할건지 정함
+
+useMutation의 return type은 array고 2개의 item이 있음
+
+첫번째는 function이고 두번째는 object임
+
+이 function은 data를 받음
+
+즉 object를 받음
+
+다시 여기로 와서 mutationFunction을 만듦
+
+그냥 mutation으로 함
+
+이 function은 백엔드로 보낸 data를 받게 됨
+
+data를 받아서 일단 type은 any라고 함
+
+그리고 여기서는 array를 return함
+
+그리고 우리가 받아야할 object도 생각해야 함
+
+loading, data, error가 있음
+
+이것을 하기 위해 세개의 state를 만들어줌
+
+첫번째로 loading을 만듦
+
+그리고 data도 만들어야함
+
+지금 typescript로 작성하고 있다면, 여기로 와서 이 type은 undefined거나 any라고 해줌
+
+error도 똑같이 해줌
+
+default로 undefined가 될거고 아니면 any임
+
+array를 return할건데 첫번째 item은 mutation이고 두번째 item은 object임
+
+loading, data, error가 있음
+
+이제 우리가 받으려고 설정했던 모든 것들을 성공적으로 return하고 있음
+
+보다시피 잘 작동함
+
+unused라는 메세지가 뜨기는 하지만 성공했음
+
+loading은 이렇게 존재하지 않음
+
+typescript를 쓰고 있다면 useMutation의 return type을 설정해야 함
+
+useMutation의 return type은 이렇게 됨
+
+먼저 array가 있고 function이 올거고 loading은 boolean임
+
+data는 undefined거나 any, error도 undefined거나 any가 됨
+
+이것은 그냥 void가 아님
+
+인수에 data를 넣어주고 any라고 함
+
+필요한 것은 아님
+
+이렇게 ?를 붙여주면 됨
+
+그런데 any니까 ?가 굳이 없어도 됨
+
+보다시피 typescript에서는 오류가 없음
+
+왜냐하면 모두 typescript 문법으로 작성되기 때문임
+
+useMutation hook의 첫번째 item으로 function을 return하고 있음
+
+object도 return하고 있는데 loading은 boolean임
+
+data는 any고 error도 any임
+
+아직 이것을 완성해야하긴 하지만 이미 꽤 멋짐
+
+원하면 이거 전체를 다른 type으로 분리시켜도 됨
+
+그러면 더 멋짐
+
+지금은 그냥 이렇게 냅둠
+
+다음 영상에서는 이것을 완성함
+
+mutation의 코드도 짤거고 잘 작동하는지 봄
+
+지금도 이전 코드보다 훨씬 나은 것 같고 그렇게 느꼈으면 좋겠음
+
+나중에 POST를 할때도 이것을 재사용 할 수 있음
+
+하지만 그건 다음 영상에서 하기로 하고, 먼저 여기를 완성하고 fetch도 함
+
+그리고 api에 대해서도 해봄
+
+이것은 별로 좋아보이지 않음
