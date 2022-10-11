@@ -11167,3 +11167,159 @@ mutation의 코드도 짤거고 잘 작동하는지 봄
 그리고 api에 대해서도 해봄
 
 이것은 별로 좋아보이지 않음
+
+## 8.3 Clean Code part Two
+
+지난 영상에서는 useMutation hook에서 쓸 것들을 받아오는 개발자 경험을 설계했는데 이제 useMutation hook을 구현해봄
+
+이것은 typescript를 위해서 썼음
+
+만약 여러분이 typescript를 쓴다면 이것을 복사하거나 스스로 작성하면 됨
+
+typescript를 쓰지 않는다면 신경 안 써도 됨
+
+이제 구현할 시간임
+
+지금 여기서 url을 받아오고 있음
+
+우리가 하고 싶은 것은 사용자에게 loading, data, error에 대해 알려주는 것임
+
+그럼 여기다가 구현 해봄
+
+만약 사용자가 mutation 함수를 실행할 때, return array의 첫번째 item이고 여기 enter임
+
+유저가 이 함수를 실행하면 먼저 setLoading(true)라고 해줌
+
+그 다음에 우리가 받은 url을 fetch함
+
+method는 POST임
+
+headers도 설정해줌
+
+Content-Type은 application/json이라고 해줌
+
+body에는 JSON.stringify(data)라고 함
+
+여기 onValid에 있는 data는 validForm임
+
+이제 다음으로 할 것은 then을 써준 뒤에 response를 받으면 response.json()이라고 써줌
+
+이것을 return 해주고 response.json()을 return하면 다른 Promise를 받게 됨
+
+그래서 다시 then을 써준 뒤에 json을 받아서 setData(json)을 함
+
+아니면 이렇게 줄일 수도 있음
+
+setData만 써줌
+
+setError도 해줌
+
+에러가 있으면 catch로 잡아서 setError를 해줌
+
+이러면 됐음
+
+그리고 마지막에는 모든 과정이 끝나면 setLoading(false)라고 해줄거고 그러면 이제 로딩이 끝남
+
+이렇게 구현을 해봤고 이제 이 코드들은 개발자가 더 이상 작성하지 않아도 됨
+
+이렇게 딱 한번만 만들어놓으면 끝임
+
+왜 GET 요청에 대한 utility function을 만들지 않는지 궁금할 수 있음
+
+"나중에는 api로부터 data를 GET 해야하지 않나요?"라고 말할 수 있음
+
+나중에는 SWR이라는 것을 쓸텐데 그게 api로부터 GET 할 수 있는 엄청난 utility function을 제공해줌
+
+data를 받고 캐싱하고 갱신하는 것은 지금 하는 것보다 훨씬 어려움
+
+지금 했던 것은 api로 data를 POST하기 위한 짧은 코드였음
+
+이렇게 구현해봤음
+
+이제 잘 작동하는지 확인해봄
+
+enter(validForm)을 실행할건데 phone과 password를 전송함
+
+여기 있는 것들을 모두 console.log 해봄
+
+무엇이 나오는지 봄
+
+이것들을 console.log한 뒤에 시간절약하는데 성공했는지 봄
+
+한번 해봄
+
+웹으로 와서 새로고침 하고 phone을 입력해주고 클릭하면 console에 아무 오류도 없어야 함
+
+하지만 보다시피 false true 외에 undefined가 있는데 이것이 undefined인 이유는 api가 아무 data도 받지 않았기 때문임
+
+api가 아무 data도 받지 않았는데 response.json() 같은 작업을 하니 에러가 발생함
+
+그래서 두가지 옵션이 있음
+
+한가지는 api에게 항상 data를 보내달라고 하는 거고 아니면 여기에 if else를 넣음
+
+선택하기 나름임
+
+나중에 카메라 끄고 고쳐보든지 함
+
+이번에는 enter api로 가서 data를 보냄
+
+{ok:true}를 보냄
+
+email은 지우고 그냥 req.body만 놔둠
+
+받아온 body의 모든 내용을 봄
+
+그러면 됐음
+
+여기서 이 response.json()이 가끔 작동하지 않을 수 있기 때문에 여기도 catch를 써줌
+
+아무것도 하지 않고 return함
+
+response에 json이 없을 경우만 해당되고 이제 json이 없다면 error가 보이지 않음
+
+왜냐하면 이렇게 error를 무시했기 때문임
+
+웹으로 와서 새로고침을 해줌
+
+email을 쓰고 제출해주면 보다시피 아주 잘 작동함
+
+true였다가 false가 됐음
+
+보다시피 잘 작동함
+
+아무 response도 보내지 않아봄
+
+res.status(200).end()라고 하고 어떤 일이 벌어지는지 봄
+
+새로고침 해주고 email을 보냄
+
+보다시피 error는 없음
+
+true만 보이고 다른 것은 없음
+
+만약 좀 더 낫게 만들고 싶다면 이렇게 3개의 state를 만드는 대신에 그냥 하나의 state만 만들어줄 수 있음
+
+이런 식으로 해볼 수 있음
+
+이것을 object로 설정함
+
+loading은 default로 false가 될거고 data는 undefined로 error도 undefined가 됨
+
+이렇게 하는게 3개의 state를 만드는 것보다 나을 것 같음
+
+카메라를 끄고 한번 수정해봄
+
+그 다음 댓글에 Github 링크를 남겨서 어느 해결법이 가장 나은지 골라봄
+
+useMutation을 가능한 짧게 써봄
+
+이제 다음 영상에서 봄
+
+이런 utility function을 만들거지만 이번에는 백엔드의 api에서 함
+
+이렇게 무엇인가를 POST하는 동작 방식이 마음에 들었으면 좋겠음
+
+예를 들어 댓글을 남긴다든지 한다면 useMutation("/comment/create") 이런 식으로 작성하고 mutation 함수랑 loading, data, error를 받을 수 있음
+
+진짜 좋은 것 같음
