@@ -11323,3 +11323,309 @@ useMutation을 가능한 짧게 써봄
 예를 들어 댓글을 남긴다든지 한다면 useMutation("/comment/create") 이런 식으로 작성하고 mutation 함수랑 loading, data, error를 받을 수 있음
 
 진짜 좋은 것 같음
+
+## 8.4 withHandler
+
+이제 함수를 하나 만들건데 handler를 쓰기 편하게 해줌
+
+이렇게 쓰기는 싫음
+
+그래서 다시 한번 helper function을 어떻게 사용할지 적어보고 그것을 구현해봄
+
+helper function은 server 폴더 안에 만듦
+
+withHandler.ts 파일을 만듦
+
+handler는 view를 handle함
+
+그리고 기억해야 할 정말 중요한게 있음
+
+nextJS에서 api route를 만들 때는 그 function을 export default 해야함
+
+export default를 하지 않으면 그 function은 누군가 api에 접속했을 때 nextJS에 의해 호출되지 않음
+
+function은 무조건 export default 해야됨
+
+이것은 매우 중요한데 여기서 function을 return함으로써 nextJS에서 실행되기 때문임
+
+다시 정리해봄
+
+우리가 어떤 코드를 짜든 return 값은 nextJS가 실행할 function이어야 함
+
+function을 return 해야함
+
+nextJS가 실행할 function을 return하는 function을 만드는 것이 단 하나의 규칙임
+
+nextJS에서 api route를 만들고 싶다면 function을 export default 해야함
+
+그러면 nextJS가 사용자가 url을 호출할 때 그 function을 실행하고 nextJS가 req와 res를 줌
+
+다시 말하지만 function을 return 해야함
+
+매우 중요함
+
+그래서 withHandler는 어떻게 만들어야 할까
+
+아직은 어떻게 구현할지 모름
+
+하지만 이렇게 해봄
+
+여기서 export default를 지워주고 이런 형태를 만들면 될 것 같음
+
+export default withHandler라고 함
+
+안에는 HTTP method를 적어줌
+
+그리고 handler function을 넣음
+
+이렇게 하면 됨
+
+먼저 handler function을 작성한 뒤에 export default withHandler를 해서 원하는 method랑 handler function을 적어줌
+
+이렇게 하면 이것을 싹 지워도 됨
+
+왜냐하면 withHandler의 핵심은 이 코드를 대신 실행해줌
+
+어떻게 작동하는지 봄
+
+여기서 withHandler를 import 해줌
+
+withHandler의 첫번째 argument는 method임
+
+이 method는 GET이나 POST나 아니면 DELETE가 됨
+
+여기에 원하는 것을 쓰면 됨
+
+그냥 좀 더 구체적으로 해보는 중임
+
+DELETE도 써줌
+
+그리고 뒤에는 실행해야 할 function이 오게 됨
+
+이 function을 지정하는 것은 매우 간단한데 그냥 여기의 req와 res를 그대로 써주면 됨
+
+그리고 void를 return함
+
+argument는 이렇게 하고 req랑 res type을 import 시켜줌
+
+보다시피 이제 typescript에는 아무 문제 없음
+
+먼저 function을 어떻게 쓸지 적고 그 다음에 세부사항을 구현하는 작업 방식을 좋아했으면 좋겠음
+
+이런 방식을 좋아함
+
+이제 무엇을 해야 할까
+
+전에 말했듯이 이렇게만 하는 것은 좋지 않음
+
+왜냐하면 아무 것도 return하고 있지 않음
+
+사용자가 api request를 보내도 nextJS가 실행할 것이 없음
+
+여기서 nextJS에 필요한 무엇인가를 return 해볼건데 nextJS는 return async function이 필요함
+
+이것은 매우 중요함
+
+우리는 nextJS가 실행해야 할 것을 return 해야됨
+
+전에는 여기 이런 코드를 썼음
+
+function을 export default하면 나중에 nextJS가 req, res를 넣어줄거라는 것을 알고 있음
+
+즉 이것이 바로 우리가 return 해야되는 것임
+
+nextJS가 찾고 있는 바로 그 function을 return함
+
+이것이 바로 nextJS가 실행할 함수임
+
+예시를 하나 들어봄
+
+대충 res.json이라고 해봄
+
+안에 {hello:true}라고 씀
+
+보다시피 여기서는 req.body를 console.log하고 있고 status 200을 보내고 있음
+
+말했듯이 여기 return하는 함수는 nextJS에서 실행함
+
+아직 이 function을 사용하지는 않았음
+
+여기 적은 이 function을 사용하지 않았음
+
+여기 안에 넣어놓기는 했지만 사용한 적은 없음
+
+즉 /api/users/enter로 가면 hello: true를 얻을 수 있음
+
+왜냐하면 여기 이 url로 가면 function을 export default하고 있음
+
+그리고 이 function은 또다른 function을 return하고 있기 때문임
+
+이 replacement(대치)를 머릿속에서 상상해볼 수 있음
+
+withHandler를 호출하면 또 다른 function을 return함
+
+즉 withHandler가 이 function이 됨
+
+이 대치를 머리에서 상상해보기를 바람
+
+다시 한번 해봄
+
+withHandler를 호출하게 되면 withHandler는 다른 function을 return하기 때문에 만약 여기서 1을 return한다고 하면 결과가 1이 될 거라는거를 알고 있음
+
+이 경우에는 withHandler는 이런 function을 return하고 있음
+
+그러면 nextJS에서 이것이 실행되고 이렇게 바뀜
+
+그러면 nextJS는 또 이것을 실행함
+
+지금 이것을 하고 있음
+
+function을 return하는 function임
+
+이제 재밌는 것을 해봄
+
+여기 method도 있고 실행할 logic이 모두 들어있음
+
+여기서 확인만 하면 됨
+
+만약 req.method가 우리가 원하는 method가 아니라면 괜찮지 않다는 코드를 return함
+
+status 405로 응답함
+
+bad request임
+
+그리고 end()함
+
+이것을 return함
+
+이제 우리는 우리의 function을 보호하고 있음
+
+이 function을 bad request로부터 보호하고 있음
+
+이제 여기 try catch를 써줌
+
+error가 있으면 error를 console.log함
+
+그리고 server error니까 status 500을 return함
+
+json()으로 사용자에게 error를 보내줌
+
+이러면 됐음
+
+보다시피 function의 껍질을 만들고 있음
+
+아직 이 함수를 쓰지는 않았고 handler가 argument로 있지만 아직 코드에 쓰지는 않았음
+
+지금은 껍데기를 만들고 있음
+
+이제 try 안에서 await하고 function을 실행시킴
+
+이 방식이 조금 헷갈릴 수 있음
+
+하지만 상상을 통해서 코드가 대치된다는 것을 잘 이해해보기를 바람
+
+withHandler가 실행되면 여기 있는 이 코드로 대치됨
+
+이 withHandler가 실행되면 이렇게 대치됨
+
+그리고 fn(req, res)에서 이 handler가 실행됨
+
+즉 이런 식임
+
+method는 POST임
+
+handler를 외부에서 만들고 난 뒤에 겉을 다른 function으로 감싼 function을 return함
+
+이러면 됐음
+
+handler 주변에 껍데기를 만들고 있음
+
+이것이 우리가 한 것임
+
+이것은 되돌려놓음
+
+다음으로 진행해도 좋음
+
+여기 return을 써주고 다 됐음
+
+한가지를 확인할건데 이제 이것이 잘 작동한다면 이 페이지로 올 수 없어야 함
+
+이제 POST 요청인지 아닌지 확인하고 handler를 실행시키기 때문임
+
+새로고침 하면 보다시피 페이지가 보이지 않음
+
+405 보이지
+
+아주 잘 작동하고 있음
+
+나중에 api로부터 data를 GET 할 수도 있음
+
+이런 식이 됨
+
+handler에서 Prisma 작업을 하고 method는 GET을 써줌
+
+handler는 withHandler의 두번째 argument에 넣어주면 됨
+
+withHandler는 그냥 껍데기일 뿐이라는 것을 기억함
+
+여기 보다시피 이것이 nextJS로 return됨
+
+nextJS가 이 코드를 실행시킴
+
+하지만 이것이 function 안의 또 다른 function이기 때문에 우리는 원하는대로 function을 마음대로 설정해서 return 할 수 있음
+
+이것이 엄청난 힘임
+
+nextJS에 return할 function을 method와 fn의 두 argument를 사용해서 맞춤 설정 할 수 있음
+
+이것을 이해했으면 좋겠음
+
+이제 실행할 시간임
+
+백엔드 console로 와서 enter에서 코드를 실행함
+
+모든게 작동함
+
+email을 입력하고 버튼을 눌러 submit하는 것까지 문제 없음
+
+console을 보면 완벽하게 잘 동작하고 있음
+
+백엔드에서 이 코드가 문제없이 실행됐음
+
+다음 영상에서 봄
+
+여기서 한 것은 nextJS에서 실행될 function을 맞춤 설정함
+
+그 방법은 한 function 안에 다른 function을 넣는거였음
+
+그렇게 맞춤형 function을 return 할 수 있었음
+
+이 argument만을 사용해 설정해봤음
+
+이러면 됐음
+
+다시 해봄
+
+이 경우에는 맞춤설정이 실행된 다음 코드가 대치되는 것을 상상해봄
+
+여기서는 method가 POST고 이 function을 실행하는데 await를 함
+
+그저 코드가 대치되는 것을 상상해봄
+
+다음 영상에서 봄
+
+이제 코드 정리하는 것은 다 했고 다음 영상에서는 Prisma도 할거지만 먼저 ../를 지울 수 있는 방법을 보여줌
+
+좋아 보이지는 않음
+
+아무도 이것을 좋아하지 않음
+
+만약 enter파일에도 보면 이런 것이 있음
+
+좋지 않음
+
+index파일에도 이런 것들이 있음
+
+다음 영상에서 다 지워봄
+
+아름다운 import를 만들어봄
