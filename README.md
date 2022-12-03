@@ -12770,7 +12770,7 @@ Twilio를 사용할 모든 준비를 마쳤음
 
 잘 작동했으면 좋겠음
 
-## 9.3 Sending SMS
+## 9.4 Sending SMS
 
 우선 Twilio로 코드 작업을 하기 전에 준비해야할게 있었음
 
@@ -12920,7 +12920,7 @@ accepted가 있고 로그인 토큰이 나와있음
 
 그래야 동작함
 
-## 9.4 Sending Email
+## 9.5 Sending Email
 
 이메일을 보내기 위해 SendGrid라는 사이트에 가입을 함
 
@@ -13085,3 +13085,333 @@ html을 지원하는 이메일 클라이언트라면 스타일이 적용된 html
 그러니 너무 많이 테스트하지는 마
 
 한 번 됐다면 다음에도 잘 됨
+
+## 9.6 Token UI
+
+이번 영상에서는 UI를 수정해봄
+
+토큰을 요청하고 문자나 이메일을 제대로 받으면 받은 토큰을 입력하기 위한 칸을 보여주도록 만듦
+
+그 입력값은 다른 api url로 요청을 보냄
+
+이것은 곧바로 만들어보기로 하고 그 전에 2가지 보여줄게 있음
+
+첫번째는 만약 이런 식으로 국가코드와 한국 번호를 적으면 db에서 에러가 남
+
+그리고 이것은 내 번호가 아님
+
+누군지 모르니까 이 번호로 전화하지마
+
+그냥 적은 랜덤 번호임
+
+여기를 클릭해서 1-time password를 받으면 보다시피 에러가 나타났음
+
+왜냐하면 이 숫자를 db에 저장하기에 너무 커서 그럼
+
+정확히 말하면 우리가 선택한 컬럼 타입 때문에 이 숫자를 저장하지 못함
+
+우리가 User 모델을 만들 때 phone에 Int를 저장할거라고 했는데, 이것은 Int가 아님
+
+BigInt라는게 있는데 이것은 좀 다른 숫자 타입임
+
+그래서 이 컬럼에서는 BigInt를 저장하겠다고 해야함
+
+이렇게 해주면 됨
+
+이 에러가 분명히 날 것이기 때문에 알려줌
+
+실제 번호로 테스트를 해보면 이 버그를 찾게 됨
+
+또 다른 해결 방법으로는 Int를 String으로 바꿈
+
+String은 이것보다 길게 쓸 수도 있으니까 원하는대로 하면 됨
+
+어쨌든 프리스마에서 BigInt를 다룰 수 있다는 것을 보여주고 싶었음
+
+또 다른 하나 말하고 싶은 것은 여기 프리스마 스튜디오로 와보면 보다시피 정말 많은 유저가 있고, 토큰도 많이 있음
+
+그런데 무엇을 할거냐면 여기 대부분을 지워버림
+
+그리고 fb.com을 가진 것과 번호가 123456인 것 2개만 남겨둠
+
+하나는 이메일로 로그인 되어 있고, 다른 하나는 폰 번호로 로그인 되어 있음
+
+나머지는 지워버림
+
+그러면 모두 선택하고 fb.com과 12345만 해제한 다음 지워버림
+
+이 2개만 살려둠
+
+이것을 지우고 변경사항을 저장해보면 프리스마가 지울 수 없다는 에러가 나옴
+
+왜냐하면 우리가 유저를 지워버리면 토큰이 가리키고 있는 user가 없어짐
+
+왜냐하면 지금 지우려는 유저들은 모두 토큰을 가지고 있어서, 유저를 삭제하면 토큰이 유저 없이 남게 됨
+
+문제는 Token 모델을 보면 user가 필수 값으로 되어 있음
+
+이런 식으로 선택적인게 아님
+
+그래서 우리는 삭제가 일어나면 프리스마가 어떻게 반응할지 정해줄 수 있음
+
+이것은 관계가 사라졌을 때 SQL DB에서도 설정할 수 있음
+
+onDelete를 써서 User가 삭제되었을 때 관계가 있는 Token이 같이 삭제되도록 만듦
+
+이런 것을 Cascade라고 함
+
+Cascade를 쓰고 여기에 마우스 커서를 올려보면 부모 레코드가 삭제되었을 때 자식 레코드도 삭제시킨다는 설명을 볼 수 있음
+
+SetNull이라는 것도 있는데, 이것은 user 값을 null로 바꾸고 Token은 그대로 내비둠
+
+우리는 user가 없는 Token을 가질 필요가 없으니 쓸 일은 없음
+
+그러니 우리는 Cascade를 사용함
+
+다시 설명해보자면, Cascade는 부모인 User를 삭제하면 Token도 삭제되도록 만듦
+
+잘 작동하는지 확인할 수 있도록 npx prisma db push를 써봄
+
+터미널에 npx prisma db push 입력함
+
+그러면 BigInt와 onDelete를 추가하도록 스키마를 수정해줌
+
+npx prisma studio를 써서 스튜디오를 한 번 더 확인해봄
+
+터미널에 npx prisma studio 입력함
+
+이제 User를 지울 수 있음
+
+전체 선택을 하고 fb.com 유저와 12345 유저를 제외하고 삭제해봄
+
+Delete records하고 저장함
+
+문제 없이 진행됨
+
+이제 Token 탭을 보면 2개의 토큰을 확인할 수 있음
+
+토큰이 2개 있음
+
+다음으로 넘어감
+
+고치면 좋은 것들을 몇 가지 수정해봤음
+
+BigInt와 onDelete를 추가해봤음
+
+그리고 이제 twilio에서 크레딧을 낭비하기 싫으니까 이 부분을 주석 처리함
+
+그리고 여기도 테스트할 때마다 메세지를 보내기 싫으니까 주석 처리해줌
+
+이것은 그냥 내가 만든 무료 계정을 함부로 쓰고 싶지 않아서 이렇게 함
+
+앞으로 계속 테스트함
+
+이제 /api/users/enter.tsx는 끝냈음
+
+이제 enter 화면으로 가서 useMutation 훅에서 받은 data를 출력해봄
+
+뭐가 나오나 봄
+
+폰 번호로 새 계정을 만들어봄
+
+여기서 inspect를 해서 Console을 확인해보면 data를 확인할 수 있음
+
+잘 작동하고 있음
+
+여기 Enter using:이라 쓰인 div와 button, form은 ok: true를 받았을 때 사라지게 만듦
+
+그래서 이 부분을 잘라내고 여기에는 data가 ok일 때 무엇인가 보여주도록 만듦
+
+우선은 빈 프래그먼트를 리턴해줌
+
+만약 타입스크립트를 사용한다면 data가 undefined일 수 있기 때문에 ?를 써주도록 함
+
+그리고 ok가 object 타입에 없다고 나오기 때문에 여기서 제네릭을 사용하는게 좋을 것 같음
+
+그래서 그냥 이렇게 useMutation을 쓰는 대신 useMutation 훅을 사용하는 developer user에게 받을 것 같은 응답의 타입을 보내주도록 해봄
+
+그러기 위해 여기에 제네릭을 사용해서 기본적으로 any 타입을 가진다고 함
+
+이것을 UseMutationResult로 보내고 UseMutationResult가 받으면 UseMutationState로 보내줌
+
+UseMutationState가 받으면 data가 T 타입이라고 써줌
+
+여기에 T를 쓰는 것도 잊지마
+
+이제 interface를 씀
+
+그럼 이것을 useMutation에 쓸 수 있음
+
+보다시피 ok가 boolean이거나 undefined일 수 있다고 나옴
+
+이제 우리 data의 타입이 지정됐음
+
+이제 모든게 문제 없이 돌아가는지 확인해봄
+
+여기로 와서 새로고침하고 폰 번호로 12345를 써봄
+
+Get one-time password를 누르면 ok를 받았기 때문에 입력칸이 사라짐
+
+이제 무엇을 해야되냐면 여기 있는 form을 복사해서 여기 null 부분에 붙여넣어줌
+
+그리고 2개의 input을 가지는 대신 하나의 input만 가지도록 만듦
+
+이것은 지우고 이것도 지움
+
+그리고 여기를 Confirm Token으로 바꿈
+
+이제 Confirmation Token을 만듦
+
+type은 number로 하면 됨
+
+label은 Confirmation Token으로 함
+
+이름은 모두 token으로 함
+
+그리고 method 부분은 없앰
+
+이것도 필요 없음
+
+그런데 EnterForm 타입을 가진 useForm을 사용하는 register에서 문제가 발생하고 있음
+
+이 타입에는 email과 phone이 있음
+
+타입스크립트에서는 에러가 나지만 UI적으로는 문제가 없이 작동함
+
+이런 식으로 보임
+
+이제 무엇을 할 수 있냐면 또 다른 form을 만들 수가 있음
+
+원한다면 여기로 와서 useForm()함
+
+보다시피 register라는 이름이 겹치기 때문에 바꿔줘야 함
+
+이것을 tokenRegister로 바꿈
+
+handleSubmit도 tokenHandleSubmit으로 바꿈
+
+그리고 타입스크립트를 사용하고 있다면 여기 interface를 추가할 수도 있음
+
+TokenForm이라고 함
+
+이것을 token으로 바꾸고 필수값으로 바꿈
+
+그리고 만약 타입스크립트를 쓴다면 이것을 방금 만든 useForm에 써줌
+
+이제 mutation이 성공적이었는지 알려주는 data, ok form은 이렇게 register하지 않고, tokenRegister를 사용하도록 함
+
+handleSubmit도 tokenHandleSubmit으로 바꿈
+
+아직 만들지는 않았지만 onValid도 onTokenValid로 바꿔줌
+
+그리고 이것은 필수값이고 number 타입을 가지도록 바꿈
+
+이제 여기에 onTokenValid를 만들어봄
+
+TokenForm 타입인 validForm을 받고 이 안에서는 또 다른 mutation 훅을 만듦
+
+여기로 와서 enter 대신 confirmToken으로 바꾸고 loading은 tokenLoading, data는 tokenData로 바꿈
+
+tokenError는 사용하지 않음
+
+이렇게 바꿔도 작동은 함
+
+왜냐하면 ok가 true나 false를 리턴함
+
+EnterMutationResult 대신에 MutationResult를 씀
+
+이해하기 편하지
+
+form과 mutation을 하나 더 만들기 위해서 이름만 바꾸고 있을뿐임
+
+이 mutation을 위한 url은 /api/users/confirm을 쓰면 됨
+
+아무튼 이렇게 몇 가지 이름만 바꿔도 문제 없이 작동하는 것을 볼 수 있음
+
+아주 좋음
+
+작동하는지 확인하기 위해 validForm을 출력해봄
+
+그러면 TokenForm이 작동되는지 확인할 수 있음
+
+12345를 입력하고 일회용 패스워드를 요청함
+
+그리고 Confirm Token을 클릭하면 validForm을 확인할 수 있음
+
+이제 무엇을 할거냐면 만약 tokenLoading이 true라면 mutation이 전송되었다는 뜻이니까 confirmToken 함수를 실행함
+
+이 함수 이름을 바꿀 수 있는 이유는 useMutation이 배열을 리턴하기 때문임
+
+useState처럼 원하는 이름으로 정할 수 있음
+
+그래서 confirmToken으로 함
+
+이 함수만 무엇인가 불러오고 있음
+
+이 confirmToken을 여기서 실행함
+
+그리고 validForm을 보내줌
+
+이제 /api/users/confirm url을 만들어야 함
+
+/api/users에서 confirm.tsx 파일을 만듦
+
+복사 붙여넣기를 할건데 req.body에서 token을 받도록 수정하고 나머지는 다 지움
+
+token을 출력하고 res.end()를 씀
+
+여기에 status(200)을 추가함
+
+confirm.tsx에서는 twilio를 사용하지 않고 mail도 필요없음
+
+이것들도 다 필요없음
+
+하지만 client는 필요함
+
+그러니 이것은 그대로 둠
+
+이제 테스트 해봄
+
+이것을 토큰으로 입력하고 보내봄
+
+그러면 여기 백엔드에서 받을 수 있음
+
+잘 작동함
+
+정말 빠르게 만들었음
+
+우리가 셋업을 열심히 했기 때문임
+
+새로운 기능, UI, form을 추가하는데 시간이 별로 안걸렸음
+
+mutation을 보내고 응답 받는 것을 만드는 것도 시간이 별로 안걸렸음
+
+이렇게만 해주면 되니까 정말 간단함
+
+유저가 상품을 올리는 것도 이런 식으로 작업 해봄
+
+form을 만들고 mutation 훅을 만들면 끝임
+
+다음 영상에서는 프리스마 다루는 것을 함
+
+어쨌든 이렇게 해냈음
+
+한가지 남은 것은 여기 있는 tokenLoading을 이 곳에 써줌
+
+토큰을 검증할 때는 tokenLoading을 통해 로딩 표시를 해줌
+
+너무 빨라서 로딩 표시가 보이지는 않지만 어쨌든 동작하고 있음
+
+한 번 더 해봄
+
+토큰 입력칸이 나옴
+
+토큰을 입력하고 확인 버튼을 누르면, 너무 빨라서 로딩 표시는 나오지 않음
+
+어쨌든 이런 식으로 작동하고 있음
+
+중요한 것은 백엔드에서 토큰을 받고 있음
+
+다음 영상에서는 프리스마를 다룰거고 유저가 실제로 로그인하도록 만들어봄
+
+iron session에 대해 살펴봄
