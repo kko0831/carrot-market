@@ -13805,3 +13805,241 @@ iron session과 프리스마 API는 정말 대단함
 그리고 이것을 또 작성할 필요 없이 이 함수도 감싸도록 만듦
 
 withSession이라 부르는 함수를 만들어봄
+
+## 9.9 Cleaning Code
+
+이제부터는 withIronSession을 감싸는 간단한 wrapper를 만들어 봄
+
+새 API route를 만들 때마다 이것을 다 쓸 수는 없음
+
+두 가지 방법이 있는데, 하나는 이것을 그냥 withHandler 안에 넣음
+
+이 function에 withIronSession을 넣어서 return함
+
+하지만 withHandler가 하는 일을 더 복잡하게 만들기는 싫어서 withHandler를 수정하지는 않음
+
+그 대신 ironSession의 wrapper를 만들어 봄
+
+여기 libs 폴더의 server 폴더에 새 파일을 하나 만듦
+
+파일 이름은 withSession임
+
+여기에 withIronSessionApiRoute를 import 함
+
+복붙해주고 그 다음에는 cookieOptions도 만듦
+
+여기 있는 쿠키의 이름을 복사하고, 이름은 마음대로 정해도 됨
+
+그리고 password도 만듦
+
+이미 password를 하나 만들어 놨음
+
+여기 https://www.passwordsgenerators.net/에서 하나 만들었음
+
+password는 36자였나 32자였나 아무튼 되게 길어야 한다는 거 잊으면 안 됨
+
+확실하게 하려고 40자로 만들었고, environment 파일(.env)에 넣었음
+
+잊지 말고 그렇게 하도록 하고, 이름은 COOKIE_PASSWORD로 만들었음
+
+이름은 원하는 대로 짓도록 하고, 서버를 껐다가 켜는 것만 잊지 말고 해주면 됨
+
+그래야 Next.js가 env 파일을 읽을 수 있음
+
+이제 export function withApiSession을 만듦
+
+여기서 export default를 하지 않는 이유는 function을 두 개 만들어야 할 것 같아서 그럼
+
+하나는 API route에서 session을 받아오기 위한 function이 됨
+
+그리고 나중에는 function이 하나 더 필요한데, 그 function은 페이지를 rendering할 때 Next.js의 Server Side Rendering에서 session을 받아옴
+
+여기에 넣어 줄 수 있게 withIronSession을 return할거고, withApiSession은 function을 하나 받음
+
+지금은 타입을 any로 해줌
+
+그리고 여기에는 cookieOptions를 보내야함
+
+여기를 보면 typescript가 오류를 내고 있음
+
+이것은 cookieOptions의 password를 virtual environment에서 가져와야 하는데, 이것이 undefined일 수 있어서 그럼
+
+이것은 이렇게 해주면 됨
+
+그럼 me.tsx 파일에서 이렇게 하는 대신에, 이 부분은 다 지워줄 수 있음
+
+그리고 withIronSessionApiRoute 대신 withApiSession을 사용해주면 됨
+
+그리고 handler를 안에 넣어주면 끝임
+
+이렇게 하는게 훨씬 나은 것 같음
+
+이제부터 req.session.user나 .save, .destroy 같은 것을 이용하려면 여기 이 function만 사용하면 됨
+
+그럼 confirm 파일에도 똑같이 해 줌
+
+이것은 다 지우고 withIronSessionApiRoute 대신 withApiSession을 씀
+
+보다시피 훨씬 보기 좋음
+
+import도 이렇게 훨씬 나아졌고, me 파일도 똑같음
+
+import가 훨씬 괜찮아졌음
+
+이제 다음으로 가도 됨
+
+function이 function을 return하고, argument로 function을 보내는 함수형 프로그래밍을 마음에 들어했으면 좋겠음
+
+꽤 괜찮다고 생각함
+
+마음에 들었으면 좋겠음
+
+이 console.log는 지움
+
+그리고 이것도 typescript declaration이 여기에 있을 수 있게 withSession 파일로 옮김
+
+여기를 지워도 잘 작동할거고 여기도 마찬가지임
+
+코드 정리는 다 됐음
+
+정리된 코드가 마음에 들었으면 좋겠음
+
+그리고 우리가 authentication을 구현한 방식도 마음에 들었으면 좋겠음
+
+굉장히 이해하기 쉽게 만든 것 같음
+
+이것만 있으면 끝임
+
+아주 훌륭함
+
+일관성을 유지하기 위해 여기서 res가 이런 json을 return 하도록 함
+
+그리고 front-end에서 API로부터 ok: true를 받았다는 것은 유저를 home 페이지 같은 곳으로 redirect 해야 한다는 뜻임
+
+그럼 enter 페이지로 가서, token이 confirm되면 그 response에 대한 정보를 얻을거고, 그것은 여기 tokenData에 들어있음
+
+그럼 여기에 useEffect를 작성함
+
+dependency 배열에는 tokenData를 넣어줌
+
+그리고 tokenData.ok가 참이면, 유저를 home 페이지로 redirect 함
+
+그러려면 router를 사용해야함
+
+이렇게 useRouter를 사용하고, 이렇게 push 해주면 됨
+
+이것만 추가해주고, 여기에 router도 넣어주면 끝임
+
+token을 confirm 하는 과정을 거쳐서 token이 존재하면 로그인 할 준비가 된거고, home 페이지로 새로고침 됨
+
+그리고 잊어버리기 전에 해두고 싶은 일이 하나 있음
+
+여기서 유저의 token을 confirm한 다음, 유저에게 응답을 하기 전에 그 유저의 token을 전부 지워버리는게 좋을 것 같음
+
+token을 전부 가지고 있을 필요는 없음
+
+token이 사용되면 즉 여기서 token을 찾으면 유저의 token을 전부 지움
+
+그리고 deleteMany를 사용할건데, 조건은 userId가 exists의 userId와 같은 token들임
+
+exists는 너무 구린 이름인 것 같음
+
+더 좋은 이름으로 바꿔 봄
+
+foundToken으로 해볼까
+
+우리가 무엇을 한건지 복습해봄
+
+req.body에 token을 담아 보냈음
+
+그 token을 찾아 보고 그 token이 없으면 404 not found를 return함
+
+그 token이 있다면, 그 token을 보유한 유저의 id를 req.session.user에 넣음
+
+그러고 나서는 session을 저장할거고, 그 다음에는 여기서 찾은 token의 userId와 같은 userId를 가진 token을 전부 삭제함
+
+간단히 말하면 여기 이 코드는 token을 한번만 사용하도록 이 token을 삭제함
+
+이제 테스트해 봄
+
+enter 페이지에 들어감(localhost:3000/enter)
+
+어떤 token이 있는지 확인해봄
+
+token이 하나 있고, 이 token은 1234임
+
+이메일은 페이스북 이메일임
+
+이렇게 페이스북 이메일을 넣은 다음, Get Login Link 버튼을 클릭함
+
+그 다음 1234를 넣고 Confirm함
+
+로딩이 끝나면 정상적으로 redirect 됐음
+
+완벽하게 작동함
+
+그리고 여기로 와서 새로고침을 하면 이 token이 사라짐
+
+이렇게 새로고침하면 token이 0이 됐음
+
+이 12345 전화번호로 테스트를 많이 해서 token이 8개나 쌓였음
+
+이 친구로 로그인해도 잘 되는지 확인해 봄
+
+이렇게 다시 enter 페이지로 감
+
+이것은 나중에 다시 다뤄볼 주제지만, 지금 우리는 로그인 된 상태지
+
+이렇게 api/users/me 페이지로 가면 보다시피 페이스북 이메일로 로그인 돼 있음
+
+그러니까 사실 이론적으로는 이 페이지에 올 수 있어서는 안 됨
+
+이론적으로는 로그인을 두 번 할 수 있어서는 안 됨
+
+이제 전화번호가 12345인 사람으로 로그인 해봄
+
+그러면 token이 생성될거고, 이것을 복사함
+
+이렇게 숫자를 입력하고 Confirm Token 버튼을 누르면, 로그인 기능이 잘 작동하고 있음
+
+그리고 보다시피 token이 0이 됐음
+
+잘 작동하고 있음
+
+삭제 과정이 잘 되고 있음
+
+이 영상을 끝내기 전에, 계속 신경쓰였던 것을 하나 수정함
+
+여기 이 phone의 타입을 BigInt에서 String으로 바꿈
+
+이렇게 안 하면 언제인가 문제가 생길 것 같음
+
+이렇게 String으로 바꿔줌
+
+이렇게 하는게 나음
+
+이상한 에러가 생기기 전에 이렇게 해두고 싶었음
+
+schema를 바꿀 때에는 npx prisma db push도 실행시켜야 한다는 것을 잊지마
+
+이것을 실행해주면 다 됐음
+
+authentication은 끝임
+
+이 시스템이 마음에 들었으면 좋겠음
+
+Iron session은 정말 최고임
+
+정말 단순하면서도 기능적임
+
+원하는대로 전부 제어할 수도 있고 정말 좋음
+
+다음 섹션에서는 진짜 데이터를 가지고 UI를 만들어 봄
+
+보다시피 지금 섹션들에서는 셋업하고 utility function을 만드는데 많은 시간을 사용하고 있어서 조금 지루할 수 있음
+
+다음 섹션들에서는 이 모든 것들이 정말 빠르게 하나로 합쳐짐
+
+전부 다 하나로 합쳐짐
+
+form도 정말 빠르게 만들 수 있을 거고, 그 form을 back-end로 보낸 다음 prisma를 이용해서 로그인 한 사람과 안 한 사람을 구분할 수도 있음
