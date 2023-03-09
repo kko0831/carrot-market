@@ -15153,3 +15153,191 @@ API URL을 어떻게 쓰는지도 알고, Iron Session을 사용해서 API URL�
 다음 섹션에서 봄
 
 이제 진짜 시작해봄
+
+## 11.0 Product Model
+
+지금부터는 메인 페이지랑 상품 페이지, 상품 업로드 페이지, 좋아요랑 좋아요 취소 API 그리고 mutation URL을 만들어 봄
+
+폴더 이름을 좀 바꿔봤음
+
+item에서 products로 바꿨고, 그러려면 Link도 좀 바꿔야 함
+
+여기에 items를 products로 바꿨고, index 파일에서도 items를 products로 바꿨음
+
+그렇게 중요한 것은 아니지만 시작하기 전에 콘솔에 뜨는 경고를 보여주고 싶음
+
+이미 실행 중인 Prisma Client instance가 10개 있음
+
+이것이 무슨 말이냐면 Next.js는 우리 앱을 hot reload함
+
+우리가 코드를 수정하고 저장할 때마다, 서버를 완전히 껐다가 켜는 것은 아니지만 hot reload를 함
+
+그럴 때마다 Prisma client가 계속 생성된다고 생각하면 됨
+
+그래서 여러 Client가 동시에 돌아감
+
+문제는 무엇이냐면 데이터베이스에는 연결에 한계가 있음
+
+데이터베이스는 연결을 무한히 받을 수가 없고 PlanetScale도 마찬가지임
+
+그리고 아마 무료 정책에는 연결에 제한이 있음
+
+어쨌든 중요한 것은 이것이 좋지 않은 상황임
+
+이렇게 많은 Client가 동시에 돌아가는 것은 이상함
+
+그래서 Prisma Client의 코드를 조금 수정함
+
+조금만 바꾸면 됨
+
+이렇게 client가 global object에 저장돼 있는 client랑 같다고 해줌
+
+이렇게 global.client라고 하면 됨
+
+그리고 만약 global client가 존재하지 않으면, 어플리케이션이 가장 처음 구동될 때는 존재하지 않겠지
+
+그러면 이렇게 새 client를 만들어 줌
+
+그런 다음에는 global client에 client를 저장함
+
+process.env.NODE_ENV가 development일 때만 해주면 될 것 같음
+
+그리고 client를 export default 해줌
+
+지금 무엇을 한건지 설명함
+
+이 파일을 처음 실행하면 global.client에 아무것도 들어있지 않음
+
+그러면 새 PrismaClient를 만듦
+
+그렇게 처음 파일이 실행될때 우리가 만든 client를 global.client에 저장함
+
+그 다음부터는 이 파일이 실행될때 global.client가 이미 만들어져 있음
+
+그래서 여기에 들어감
+
+혹시 타입스크립트를 쓴다면 여기에 오류가 뜰텐데, 이것은 global에 client라는게 없어서 그럼
+
+이것은 고칠 수 있음
+
+이렇게 global을 declare하고 client라는 변수를 만들어 주는데, 그 타입을 PrismaClient 혹은 undefined로 해주면 됨
+
+이제 schema.prisma 파일로 가서 홈 화면을 만들어 봄
+
+홈 화면에는 상품이 필요하지
+
+상품 정보는 데이터베이스에서 가져오는 거니까 거기서부터 시작함
+
+앞으로는 같은 과정을 거침
+
+일단 model을 만들고 데이터베이스를 수정하고, mutation을 한 다음 데이터를 가져옴
+
+항상 같음
+
+model, 데이터베이스, mutation 그 다음에 useSWR로 데이터 가져오기임
+
+model부터 만들어 봄
+
+이렇게 model Product라고 써주고 Product에는 id가 있어야함
+
+createdAt이랑 updatedAt도 있어야 함
+
+그리고 token에도 user가 있는 것처럼 product에 user도 있어야 함
+
+그러니 이렇게 user를 넣어주고 User model에도 이것을 넣어야함
+
+User에 products를 넣어주고 타입은 이렇게 함
+
+이제 다시 돌아감
+
+이제 relation field를 추가해야 함
+
+Token이랑 똑같이 하면 됨
+
+Token에서 그대로 복붙함
+
+지금 하는 것은 무엇이냐면, Product의 userId 필드에 저장되는 숫자가 User model의 id라고 해줌
+
+Product에 또 무엇이 있을까
+
+여기를 보면 이미지가 있음
+
+imageURL을 넣음
+
+String 타입일거고 name도 필요함
+
+이것도 String임
+
+price도 필요함
+
+이것은 아마 Int 타입임
+
+소숫점이 들어갈 수도 있으니까 Float가 나으려나
+
+그냥 Int로 함
+
+그리고 description도 필요함
+
+이것도 String 타입임
+
+하지만 이것은 긴 텍스트가 될 수 있어야 함
+
+여기 name 같은 경우에는 길이에 제한이 있음
+
+데이터베이스는 텍스트 길이에 제한을 둠
+
+길이 제한이 없는 필드를 만들 수는 없음
+
+name의 길이가 얼마나 될건지 데이터베이스에 알려줘야 함
+
+description도 마찬가지고 그냥 이렇게만 쓰면 Prisma가 MySQL의 normal varchar로 설정할 것 같음
+
+대충 한 191자 제한이었던거 같음
+
+이것은 조금 더 길게 설정해봄
+
+이렇게 @db라고 쓰면 원하는 타입을 선택할 수 있음
+
+이렇게 Text, MediumText, TinyText 같은게 있는데, 이런 것은 SQL 쪽에서 다 사용함
+
+우리는 MediumText로 해봄
+
+이러면 된 것 같음
+
+Product에는 id도 있고 createAt이랑 updatedAt도 있음
+
+자기를 업로드한 user도 있을테고 이미지 url도 있음
+
+이름이랑 가격, 설명도 있음
+
+지금은 이정도면 된 것 같음
+
+바로 가봄
+
+pscale carrot-market에 잘 연결됐는지 확인하고, 터미널에 npx prisma db push라고 입력함
+
+너무 빨라서 오류가 있는지 없는지 모르겠음
+
+branches에 가봄
+
+main branch에서 schema로 가서 새로고침을 해봄
+
+보다시피 이것은 mediumtext고 이름이랑 이미지는 191자임
+
+이미지 url이 아주 긴 경우에 대비해서 이미지는 조금 더 길어야 할 수도 있음
+
+191자도 엄청 길기는 하지만 조금 더 길게 만들어도 됨
+
+어쨌든 보다시피 아무런 문제 없이 잘 됐음
+
+첫번째 단계는 끝남
+
+데이터베이스를 mutate하고 modify 했음
+
+relationship이랑 model에 조금 더 해줘야 하는 것이 있는데, 우리가 MySQL을 쓰는 것이 아니기 때문에 그럼
+
+우리가 쓰고 있는 PlanetScale은 Vitess로 만들어졌음
+
+그래서 index에 조금 손봐야할 것이 있는데 그것은 나중에 해보도록 함
+
+왜 그렇게 해야 하는지도 나중에 설명해줌
