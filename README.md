@@ -15341,3 +15341,133 @@ relationship이랑 model에 조금 더 해줘야 하는 것이 있는데, 우리
 그래서 index에 조금 손봐야할 것이 있는데 그것은 나중에 해보도록 함
 
 왜 그렇게 해야 하는지도 나중에 설명해줌
+
+## 11.1 Upload Form
+
+데이터베이스는 준비가 끝났으니까 이제 product를 업로드 해볼 차례임
+
+form을 만들어서 그 form을 백엔드에 submit하고, 백엔드에서 client를 이용해서 데이터베이스를 modify하면 됨
+
+예상할 수 있겠지만 이 과정은 여러번 반복됨
+
+product를 업로드 할때도 form을 만들어야 하고 글을 작성할 때도, 라이브 스트리밍을 만들 때도 프로필을 수정할 때도 똑같은 작업을 계속해서 반복해야 함
+
+지금부터는 반복연습인 셈임
+
+나중에는 CloudFlare를 이용해서 이미지, 라이브 스트리밍, 채팅을 다뤄볼거지만 그것은 나중에 함
+
+이번 섹션은 우리가 전에 배운 것들을 연습하는 시간이 됨
+
+react hook form도 많이 써볼거고, mutation hook이랑 API url, Prisma Client, useSWR도 많이 씀
+
+이번 섹션에서 해볼 것들은 대부분 반복적임
+
+지금부터는 연습시간이라는 것을 미리 알려줌 
+
+업로드 페이지부터 시작해봄
+
+pages/products/upload로 가서 여기 보이는 에러를 먼저 고쳐야 함
+
+이 두 Input에는 register prop이 필요함
+
+실시간으로 확인할 수 있게 이 페이지에 가 놓고 바로 시작해봄
+
+useForm훅을 사용함
+
+그리고 타입을 하나 만듦
+
+지금은 이름, 가격, 설명만 넣어줌
+
+이미지는 CloudFlare image에 대해 공부할때 추가함
+
+그럼 이름이랑 가격, 설명을 넣어줌
+
+String 타입임
+
+가격은 number 타입일거고 바로 여기에 넣어줌
+
+지금은 register랑 handleSubmit만 있으면 될 것 같음
+
+Input이랑 TextArea에 register를 넣어줌
+
+여기는 name이고 이것은 description임
+
+TextArea를 리팩토링 했던가
+
+안 했던 것 같음
+
+여기서 녹화를 잠시 끊고, 여기서 register prop을 복사해서 TextArea에 넣음
+
+그냥 같이 해보면 됨
+
+register를 TextArea에도 넣어줌
+
+import하고 여기에도 넣어줌
+
+그리고 Input에서 했던 것처럼 register가 들어오면 이렇게만 해주면 됨
+
+여기 TextArea로 들어가서 register가 들어오면 이렇게 해줌
+
+전부 다 required로 설정해주면 끝임
+
+이제 자바스크립트 쪽에서도 required하도록 만듦
+
+이 required는 HTML에 적용됨
+
+react hook form에 required를 설정해야 자바스크립트에서 유효성 검사를 할 수 있음
+
+이제 onValid function을 만듦
+
+UploadProductForm 타입의 데이터를 받을거고 이것을 handleSubmit에 넣어줌
+
+데이터를 콘솔로 찍어봄
+
+한번 확인해 봄
+
+콘솔을 열고 이름은 nico, 가격 12, 설명은 so good으로 업로드 하면 잘 나옴
+
+보다시피 form을 순식간에 만들었음
+
+그럼 form은 끝났고 이제 mutation을 만들 차례임
+
+백엔드를 mutate하는 hook을 만들었음
+
+더 정확하게는 mutation 요청을 보내는 hook임
+
+아주 간단한 hook이었어음
+
+mutation을 보내고 싶은 url에 useMutation을 사용하면 됨
+
+그리고 그 mutation을 호출할 때에는 데이터를 가지고 호출하면 됐음
+
+한번 해봄
+
+useMutation을 사용하고 url은 /api/products면 될 것 같음
+
+이러면 요청을 보냄
+
+그리고 여기에는 uploadProduct랑 loading을 가져오면 끝임
+
+useMutation이 loading이랑 data도 줌
+
+data도 가져옴
+
+이제 onValid에서 로딩 중이라면 함수를 종료함
+
+그리고 로딩 중이라면 UI에 그것을 표시해야함
+
+그리고 로딩 중이 아니라면 uploadProduct 함수를 실행함
+
+그리고 uploadProduct 함수는 이 설명, 이름, 가격을 받음
+
+그러면 이 데이터는 bucket에 들어가게 될건데 아직 이 url이 없음
+
+그것은 다음 영상에서 함
+
+이번 영상에서는 form만 다룸
+
+보다시피 아주 반복적임
+
+꽤 오랫동안 이럴건데 계속 연습하면서 이것이 얼마나 생산적인지 알아줬으면 좋겠음
+
+순식간에 기능을 추가할 수 있게 됨
