@@ -15471,3 +15471,169 @@ data도 가져옴
 꽤 오랫동안 이럴건데 계속 연습하면서 이것이 얼마나 생산적인지 알아줬으면 좋겠음
 
 순식간에 기능을 추가할 수 있게 됨
+
+## 11.2 Upload API
+
+이제 /api/products를 만듦
+
+api 폴더에 products 폴더를 만듦
+
+이 안에 다른 경로가 있는게 아니라 /products에서 끝내고 싶으니까 index.ts 파일을 만들어 줌
+
+여기에 이것을 그냥 복붙함
+
+진짜로 이렇게 간단함
+
+withHandler는 맞지만 POST가 되어야함
+
+그리고 여기서 request를 받을때 body를 열고 싶음
+
+넘어오는 것은 이것이 전부임
+
+이름, 가격, 설명 이 세 가지를 여기에 넣음
+
+name, price, description을 받을거고 req.session을 열어서 user도 받음
+
+이것을 한 줄로 만들려면 이렇게 하면 됨
+
+그럼 이것은 지워도 됨
+
+이것이 더 보기 좋음
+
+이제 client.product를 하면 이제 자동완성이 됨
+
+create를 씀
+
+잠깐 Prisma로 돌아가서 무엇을 넣어야 하는지 봄
+
+이것들은 자동으로 생성될거고, 이것은 넣어줘야 하니까 user랑 연결시켜야 할거고, 이미지도 필요하지만 나중에 할거니까 지금은 그냥 아무 문자열이나 넣음
+
+그 다음은 이름, 가격, 설명인데 이것은 다 가지고 있음
+
+바로 해 봄
+
+id를 가지고 user도 연결시켜줌
+
+이미지를 깜빡했음
+
+그래서 여기에 오류가 뜸
+
+이미지도 이렇게 써 줌
+
+지금은 그냥 이렇게 함
+
+xx라고 함
+
+이녀석에게 await를 붙여주고 ok: true를 return하면 됨
+
+이러면 mutation은 끝났음
+
+이제 form으로 돌아감
+
+form에서 바로 여기에 ok: true라는 데이터를 받음
+
+그러면 useEffect를 써서 data가 변할 때마다 실행되도록 해주고, data.ok가 참이면 router를 사용해서 방금 만든 product의 id로 redirect함
+
+그러려면 그냥 ok만 보내는게 아니라 product도 return 해야함
+
+product id만 return 하던가 아니면 전체를 다 보내야함
+
+여기에 product 변수를 만들어주고 여기에 넣어주면 됨
+
+생성한 product를 return 했으니까 이제 그 product의 id를 받아서, 유저를 그 페이지로 redirect 할 수 있음
+
+product를 업로드한 순간 redirect함
+
+타입스크립트를 만족시킬 타입을 만들어야함
+
+uploadProductMutation이라는 interface를 만듦
+
+안에 무엇이 들어가지
+
+ok: true가 있으니까 ok: boolean이라고 해줌
+
+우리가 안 해본 것이 있는데 Prisma types를 아직 안 써 봤음
+
+Prisma가 타입을 만들어줌
+
+이것을 알아야 함
+
+create에 들어가보면 보다시피 Prisma가 product 타입을 이렇게 만들어줌
+
+Prisma는 product가 어떻게 생겼는지를 앎
+
+저 타입을 프론트엔드에서도 써먹을 수 있음
+
+이렇게 UploadProductMutation 안에 product의 타입은 Product라고 쓸 수 있음
+
+이 타입은 Prisma Client에서 옴
+
+product가 이렇게 생겼다고 알려줌
+
+이것이 Prisma의 힘임
+
+만들어 주는 타입을 마음대로 쓰면 됨
+
+이제 이 interface를 mutation에 넣어줌
+
+준비가 됐음
+
+data.ok가 참이면 router를 사용함
+
+useRouter로 router를 만들어주고 router에 push할건데 어디로 가야할까
+
+이런 주소로 가면 됨
+
+한번 확인해봄
+
+npx prisma studio를 이용해서 확인해도 됨
+
+일단 다 닫음
+
+product가 있음
+
+지금은 0개임
+
+mutation이 잘 되는지 실행해봄
+
+일단 재시작하고 이름은 nico, 가격은 12, 설명은 good으로 함
+
+어떤 에러가 떴는지 봄
+
+여기에서 Node를 보면 undefined의 property를 읽을 수 없음
+
+지금 무슨 일이 일어났냐면 우리가 데이터베이스를 push 하잖아
+
+그러면 client가 또 만들어지지
+
+보다시피 타입은 완벽하게 작동하고 있음
+
+그런데 서버를 재시작하는 것을 깜빡했음
+
+서버를 재시작하지 않아서 Next.js 백엔드가 client를 재생성하지 않았음
+
+그래서 client가 product를 모름
+
+이제 잘 됨
+
+가격이 숫자여야 하는데 문자열임
+
+이거 고치는 법은 알잖아
+
+price 앞에 이렇게 +만 붙여주면 됨
+
+업로드 아이템하면 로딩하고 products/1로 왔음
+
+잘 된다는 뜻임
+
+바라던대로 redirect가 잘 됐음
+
+잘 됨
+
+Prisma Studio로 가서 새로고침 해봄
+
+user는 Anonymous임
+
+어쨌든 보다시피 잘 로그인 돼 있고 연결이 잘 이루어졌음
+
+userId는 9, 이미지, 이름, 가격, 설명까지 잘 나옴
