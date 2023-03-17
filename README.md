@@ -15637,3 +15637,125 @@ user는 Anonymous임
 어쨌든 보다시피 잘 로그인 돼 있고 연결이 잘 이루어졌음
 
 userId는 9, 이미지, 이름, 가격, 설명까지 잘 나옴
+
+## 11.3 See Products
+
+지금은 가짜 데이터를 쓰고 있으니까 이번 영상에서는 홈페이지에 진짜 데이터를 넣어봄
+
+여기서 문제가 하나 생기는데 설명함
+
+우리는 useSWR을 이용해서 데이터를 받아옴
+
+그리고 받아올 URL은 /api/products임
+
+여기서 문제는 /api/products가 post 요청만 가능함
+
+여기를 보면 withHandler 함수를 사용하는데 이 함수는 handler가 get 요청을 받지 못하도록 막고 있음
+
+사실 REST API 지침을 따르려면 /api/products가 get과 post 둘 다 처리할 수 있어야 함
+
+post는 product를 생성하고, get은 product들을 받음
+
+꼭 원한다면 /products/upload 같은 것을 만들어서 이런 문제를 회피할 수도 있겠지만, 그렇게 좋은 생각은 아닌 것 같음
+
+코드를 리팩토링할 때 겪는 어려움을 즐기기도 함
+
+그러니까 우리는 withHandler 함수를 수정함
+
+method를 string으로 받는 대신 여러 method를 배열의 형태로 받음
+
+여기에 method라는 타입을 하나 만듦
+
+이렇게 넣어주고 이것을 method가 아니라 methods로 고치고, 여러 method가 들어가는 배열로 설정함
+
+여기도 고치고 여기 이 methods는 배열이 됐음
+
+그럼 이 조건은 말이 안 됨
+
+이런 식으로는 참거짓을 판별할 수 없음
+
+methods 배열 안에 req.method가 있는지 확인해야 함
+
+req.method를 여기에 넣어주면 됨
+
+그리고 !==가 아니라 &&을 써서 req.method가 존재하는지 먼저 확인하고, methods 배열 안에 any 타입의 req.method가 있는지 확인하면 됨
+
+여기는 없을 때 실행해야 함
+
+존재하지 않아야 오류인거니까 여기에서 methods를 배열로 바꿔주고, GET과 POST 요청을 둘 다 받을 수 있게 함
+
+이러면 온갖 곳에서 에러가 남
+
+confirm, enter, me 전부 에러를 내고 있음
+
+이것을 고쳐야 해서 그럼
+
+배열로 만들고 이름도 methods로 바꿈
+
+이것도 마찬가지고 배열로 만들고 이름을 methods로 함
+
+배열로 만들고, 이름을 methods로 함
+
+GET과 POST 둘 다 받을 수 있게 됐으니까 이제 이것도 바꿔야 함
+
+여기로 와서 req.method가 GET일 때 처리하는 코드를 여기에 넣을거고, req.method가 POST면 이 코드를 넣으면 됨
+
+GET일 때 해야 할 일은 사실 별 거 없는 것 같음
+
+products 변수를 선언하고 findMany로 전부 가져오면 됨
+
+페이지를 나누는 법은 나중에 공부함
+
+product가 100개, 200개, 1000개라면 당연히 이렇게 해서는 안 됨
+
+이제 index 파일에서 이렇게 data를 받을 수 있음
+
+그리고 data를 콘솔로 찍어봄
+
+한번 확인해봄
+
+브레이브 브라우저로 가서 새로고침 하면 잘 나옴
+
+product가 잘 나오고 있음
+
+첫번째 product임
+
+훌륭하게 작동하고 있음
+
+이제 이 부분을 진짜 데이터로 바꾸면 됨
+
+data라고 쓰고, data에는 ok랑 products가 있음
+
+여기에는 product를 씀
+
+이것은 product.id가 됨
+
+이것도 마찬가지고 title은 product.name임
+
+그리고 이것은 product.price임
+
+comments랑 hearts는 나중에 해봄
+
+여기에 문제가 하나 있는데 타입스크립트가 product가 무엇인지 몰라서 생기는 오류임
+
+다행인 점은 useSWR을 사용할 때 데이터가 어떤 모습일지 알려줄 수 있음
+
+여기에 ProductsResponse라는 interface를 만듦
+
+ok는 boolean이고 products는 Product 배열임
+
+Prisma가 만들어 준 타입임
+
+배열로 만들고 여기에 넣음
+
+타입스크립트가 만족하는 것 같음
+
+여기를 확인해보면 문제 없음
+
+우리의 첫번째이자 유일한 product임
+
+너무 잘 됨
+
+이제 상품을 업로드 할 수도 있고, 모든 상품 정보를 받을 수도 있음
+
+다음 영상에서는 상품 정보를 볼 수 있도록 함
